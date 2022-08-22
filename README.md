@@ -11,3 +11,12 @@ I built 1st version on Android that available in [Play Store](https://play.googl
 - document choices and architecture on the way
 - take care of project health from the beginning (tests, CI, static code analysis, proper depedencies updates)
 - make it easy to follow for others and myself in the future
+
+## Project structure
+
+### Client application (iOS/Android)
+
+Client application consists of 3 parts:
+- [app](app): module containing domain and business logic that is shared between iOS and Android
+- [androidApp](androidApp): module containing Android app implementation
+- [iosApp](iosApp): project with iOS app implementation
