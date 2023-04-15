@@ -16,7 +16,4 @@ I built 1st version on Android that available in [Play Store](https://play.googl
 
 ### Client application (iOS/Android)
 
-Client application consists of 3 parts:
-- [app](app): module containing domain and business logic that is shared between iOS and Android
-- [androidApp](androidApp): module containing Android app implementation
-- [iosApp](iosApp): project with iOS app implementation
+See: [mobile](mobile) directory to learn more.
