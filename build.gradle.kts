@@ -23,3 +23,7 @@ buildscript {
             """.trimIndent()
         )
 }
+
+plugins {
+    id("org.openapi.generator") version "6.4.0" apply false
+}

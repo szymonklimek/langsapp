@@ -1,3 +1,8 @@
+import org.openapitools.generator.gradle.plugin.tasks.ValidateTask
+
+plugins {
+    id("org.openapi.generator")
+}
 
 // region Documentation docker image building and publishing
 
@@ -46,6 +51,31 @@ val pushDockerImage by tasks.registering {
             commandLine("docker")
             args("push", imageUrl)
         }
+    }
+}
+
+// endregion
+
+// region Open API specs validation
+
+val openApiValidationGroup = "open api validation"
+val apiDirectoryPath = projectDir.absolutePath ?: error("Invalid project path")
+
+val validationTasks = listOf(
+    "UsersCommandApi" to "$apiDirectoryPath/public/users_command_api.yaml",
+    "UserFollowCommandApi" to "$apiDirectoryPath/public/user_follow_command_api.yaml"
+).map {
+    tasks.register("validate${it.first}", ValidateTask::class) {
+        group = openApiValidationGroup
+        recommend.set(false)
+        inputSpec.set(it.second)
+    }
+}
+
+val validateOpenApiSpecs by tasks.registering {
+    group = openApiValidationGroup
+    validationTasks.forEach {
+        dependsOn(it)
     }
 }
 
