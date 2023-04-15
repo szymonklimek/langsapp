@@ -23,6 +23,10 @@ Project is planned to consist of following main components:
    databases, observability tools etc.
 5. Automation tasks helpful in managing the project
 
+On the technical side project consists of several separate [Gradle](https://gradle.org/) projects:
+1. Root project specified by top [build.gradle.kts](build.gradle.kts) and [settings.gradle.kts](settings.gradle.kts)
+2. Mobile project specified in [mobile](mobile) directory
+
 ### Client application (iOS/Android)
 
 See: [mobile](mobile) directory to learn more.
