@@ -1,4 +1,5 @@
 # Langsapp
+
 Simple language learning application.
 Choose language, learn new words and repeat them according to the schedule calculated by the app.
 
@@ -13,6 +14,14 @@ I built 1st version on Android that available in [Play Store](https://play.googl
 - make it easy to follow for others and myself in the future
 
 ## Project structure
+
+Project is planned to consist of following main components:
+1. Mobile applications for Android and iOS systems
+2. Service applications exposing API managing social features of the project
+3. API layer defining communication contract between apps
+4. Infrastructure scripts, definitions and descriptions for managing additional resources such as object storages,
+   databases, observability tools etc.
+5. Automation tasks helpful in managing the project
 
 ### Client application (iOS/Android)
 
