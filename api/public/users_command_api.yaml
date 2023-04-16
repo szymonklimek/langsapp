@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Langsapp Users API
+  description: "API for managing users"
+  version: 1.0.0
+
+servers:
+  - url: https://api.langsapp.net
+    description: Production server
+
+paths:
+  /user:
+    put:
+      tags:
+        - users
+      summary: Creates or updates user
+      operationId: upsertUser
+
+      parameters:
+        - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Name'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Version'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Model'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Manufacturer'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Package-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
+
+      requestBody:
+        description: Updated user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpsertUserRequest'
+        required: true
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: Unauthorized
+          content: { }
+        404:
+          description: User not found
+          content: { }
+
+  /user/update-properties:
+    put:
+      tags:
+        - users
+      summary: Updates properties of the user
+      operationId: updateUserProperties
+
+      parameters:
+        - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Name'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Version'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Model'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Manufacturer'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Package-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
+
+      requestBody:
+        description: Updated properties
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserProperties'
+        required: true
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserProperties'
+        401:
+          description: Unauthorized
+          content: { }
+        404:
+          description: User not found
+          content: { }
+
+components:
+  schemas:
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          description: Chosen username
+          type: string
+        avatar_url:
+          description: URL of avatar image
+          type: string
+        properties:
+          description: Additional properties attached to the profile
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - id
+        - name
+
+    UpsertUserRequest:
+      type: object
+      properties:
+        name:
+          description: Chosen username
+          type: string
+        avatar_url:
+          description: URL of previously uploaded image of avatar
+          type: string
+        properties:
+          description: Set of properties to be added or updated
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - name
+
+    UpdateUserProperties:
+      type: object
+      additionalProperties:
+        type: string

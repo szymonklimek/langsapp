@@ -1,0 +1,85 @@
+openapi: 3.0.3
+
+components:
+  parameters:
+
+    Accept-Language:
+      in: header
+      name: Accept-Language
+      description: Expected language
+      schema:
+        type: string
+        example: "pl"
+
+    Authorization:
+      in: header
+      name: Authorization
+      description: Authorization token value
+      schema:
+        type: string
+        example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+
+    AuthorizationRequired:
+      in: header
+      name: Authorization
+      description: Authorization token value
+      required: true
+      schema:
+        type: string
+        example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+
+    Client-Device-Id:
+      in: header
+      name: Client-Device-Id
+      description: Identifier of client device
+      schema:
+        type: string
+        example: "5c4c26c0-871c-4d14-8a20-08051c530e1f"
+
+    Client-Device-System-Name:
+      in: header
+      name: Client-Device-System-Name
+      description: Name of client device's operating system
+      schema:
+        type: string
+        example: "android"
+
+    Client-Device-System-Version:
+      in: header
+      name: Client-Device-System-Version
+      description: Version of client device's operating system
+      schema:
+        type: string
+        example: "7.1.2"
+
+    Client-Device-Model:
+      in: header
+      name: Client-Device-Model
+      description: Name of client's device model defined by the manufacturer
+      schema:
+        type: string
+        example: "sm-g960f"
+
+    Client-Device-Manufacturer:
+      in: header
+      name: Client-Device-Manufacturer
+      description: Name of the manufacturer of client device
+      schema:
+        type: string
+        example: "Samsung"
+
+    Client-App-Package-Id:
+      in: header
+      name: Client-App-Id
+      description: Identifier of client application
+      schema:
+        type: string
+        example: "com.example.android"
+
+    Client-App-Version:
+      in: header
+      name: Client-App-Version
+      description: Version of client application
+      schema:
+        type: string
+        example: "1.1.2 (123)"

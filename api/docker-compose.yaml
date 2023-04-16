@@ -1,0 +1,8 @@
+version: "3.3"
+
+services:
+  open-api-docs:
+    container_name: langsapp-open-api-docs
+    image: "${CONTAINER_REGISTRY_URL}/langsapp-open-api-docs"
+    ports:
+      - "29100:8080"
