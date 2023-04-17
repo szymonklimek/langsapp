@@ -1,5 +1,6 @@
 rootProject.name = "langsapp"
 
+include(":auth-jwt")
 include(":config")
 include(":langsapp")
 include(":users-commands")
