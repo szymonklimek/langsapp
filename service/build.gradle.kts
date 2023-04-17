@@ -4,6 +4,10 @@ buildscript {
             .inputStream.reader().readText().replace("\n", "")
     )
     project.extra.set("package.group", "com.klimek.langsapp")
+    project.extra.set(
+        "open.api.directory.public",
+        rootDir.parentFile.absolutePath + File.separator + "api" + File.separator + "public" + File.separator
+    )
 }
 
 plugins {
