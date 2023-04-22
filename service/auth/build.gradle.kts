@@ -10,15 +10,10 @@ plugins {
     id("org.graalvm.buildtools.native")
 }
 
-version = findProperty("scm.commit.hash") ?: error("Missing current commit hash")
-group = findProperty("package.group") ?: error("Missing package group")
-
-
 dependencies {
-    implementation(project(":auth"))
-    implementation(project(":config"))
-    implementation(project(":users-commands"))
-    implementation(project(":user-follow-commands"))
+    api(project(":auth-jwt"))
+    api(project(":config"))
+    implementation(libs.spring.boot.starter)
 }
 
 tasks.withType<KotlinCompile> {
@@ -26,8 +21,4 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = libs.versions.jvm.target.get()
     }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }
