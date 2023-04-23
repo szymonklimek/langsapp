@@ -2,6 +2,9 @@
 jvm-target = "17"
 kotlin-coroutines = "1.6.1"
 ecwid-consul-api = "1.4.5"
+arrow = "1.2.0-RC"
+auth0-java-jwt = "4.4.0"
+junit-jupiter = "5.0.3"
 
 [libraries]
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
@@ -17,3 +20,11 @@ jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-dat
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 
 ecwid-consul-api = { module = "com.ecwid.consul:consul-api", version.ref = "ecwid-consul-api" }
+
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+auth0-java-jwt = { module = "com.auth0:java-jwt", version.ref = "auth0-java-jwt" }
+
+# Test libraries
+
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }

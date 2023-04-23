@@ -1,14 +1,19 @@
 package com.klimek.langsapp.service.users.commands
 
+import com.klimek.langsapp.auth.jwt.AuthenticationError
+import com.klimek.langsapp.auth.jwt.Token
+import com.klimek.langsapp.auth.jwt.TokenAuthenticator
 import com.klimek.langsapp.service.users.generated.UpsertUserRequest
 import com.klimek.langsapp.service.users.generated.User
 import com.klimek.langsapp.service.users.generated.apis.UserApi
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
-import java.util.UUID
 
 @RestController
-class UserCommandsController : UserApi {
+class UserCommandsController(
+    private val tokenAuthenticator: TokenAuthenticator
+) : UserApi {
 
     override suspend fun updateUserProperties(
         authorization: String,
@@ -20,7 +25,11 @@ class UserCommandsController : UserApi {
         clientDeviceManufacturer: String?,
         clientAppId: String?,
         clientAppVersion: String?
-    ) = ResponseEntity.ok(requestBody)
+    ) = tokenAuthenticator.authenticate(Token(authorization))
+        .fold(
+            ifLeft = { it.handleAuthenticationError() },
+            ifRight = { ResponseEntity.ok(requestBody) }
+        )
 
     override suspend fun upsertUser(
         authorization: String,
@@ -32,5 +41,14 @@ class UserCommandsController : UserApi {
         clientDeviceManufacturer: String?,
         clientAppId: String?,
         clientAppVersion: String?
-    ) = ResponseEntity.ok(User(id = UUID.randomUUID().toString(), name = upsertUserRequest.name))
+    ): ResponseEntity<User> = tokenAuthenticator.authenticate(Token(authorization))
+        .fold(
+            ifLeft = { it.handleAuthenticationError() },
+            ifRight = { ResponseEntity.ok(User(id = it.userId, name = upsertUserRequest.name)) }
+        )
+
+    private fun <T> AuthenticationError.handleAuthenticationError(): ResponseEntity<T> = when (this) {
+        is AuthenticationError.InvalidConfiguration -> ResponseEntity.internalServerError().build()
+        else -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
+    }
 }
