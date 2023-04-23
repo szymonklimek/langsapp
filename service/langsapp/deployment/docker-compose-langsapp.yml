@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  service:
+    container_name: service-langsapp
+    image: "${CONTAINER_REGISTRY_URL}/langsapp:${LANGSAPP_IMAGE_VERSION}"
+    environment:
+      - LANGSAPP_CONSUL_URL=${LANGSAPP_CONSUL_URL}
+      - LANGSAPP_CONSUL_DIRECTORY=${LANGSAPP_CONSUL_DIRECTORY}
+    ports:
+      - "8282:8080"
