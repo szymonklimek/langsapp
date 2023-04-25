@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class UserCommandsController(
-    private val tokenAuthenticator: TokenAuthenticator
+    private val tokenAuthenticator: TokenAuthenticator,
+    private val userCommandsService: UserCommandsService
 ) : UserApi {
 
     override suspend fun createUser(
@@ -28,7 +29,27 @@ class UserCommandsController(
     ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
-            ifRight = { ResponseEntity.ok(UserResponse(id = it.userId, name = userRequest.name)) }
+            ifRight = { authenticatedUser ->
+                userCommandsService.createUser(
+                    userId = authenticatedUser.userId,
+                    userRequest = userRequest
+                ).fold(
+                    ifLeft = {
+                        when (it) {
+                            is UserCommandsService.Companion.Error.UserAlreadyExists ->
+                                ResponseEntity.status(HttpStatus.CONFLICT).build()
+
+                            is UserCommandsService.Companion.Error.UserNameAlreadySelected ->
+                                ResponseEntity.badRequest().build()
+
+                            else -> ResponseEntity.internalServerError().build()
+                        }
+                    },
+                    ifRight = {
+                        ResponseEntity.ok(it)
+                    }
+                )
+            }
         )
 
     override suspend fun updateUser(
@@ -44,7 +65,27 @@ class UserCommandsController(
     ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
-            ifRight = { ResponseEntity.ok(UserResponse(id = it.userId, name = userRequest.name)) }
+            ifRight = { authenticatedUser ->
+                userCommandsService.updateUser(
+                    userId = authenticatedUser.userId,
+                    userRequest = userRequest
+                ).fold(
+                    ifLeft = {
+                        when (it) {
+                            is UserCommandsService.Companion.Error.UserNotFound ->
+                                ResponseEntity.notFound().build()
+
+                            is UserCommandsService.Companion.Error.UserNameAlreadySelected ->
+                                ResponseEntity.badRequest().build()
+
+                            else -> ResponseEntity.internalServerError().build()
+                        }
+                    },
+                    ifRight = {
+                        ResponseEntity.ok(it)
+                    }
+                )
+            }
         )
 
     private fun <T> AuthenticationError.handleAuthenticationError(): ResponseEntity<T> = when (this) {

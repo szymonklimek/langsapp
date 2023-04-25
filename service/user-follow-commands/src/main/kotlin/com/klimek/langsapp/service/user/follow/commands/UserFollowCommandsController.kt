@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class UserFollowCommandsController(
-    private val tokenAuthenticator: TokenAuthenticator
+    private val tokenAuthenticator: TokenAuthenticator,
+    private val userFollowCommandsService: UserFollowCommandsService
 ) : FollowApi {
 
     override suspend fun followUser(
@@ -27,7 +28,18 @@ class UserFollowCommandsController(
     ) = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
-            ifRight = { ResponseEntity.ok(Unit) }
+            ifRight = { authenticatedUser ->
+                userFollowCommandsService.followUser(
+                    followerUserId = authenticatedUser.userId,
+                    userId = followRequest.userId
+                ).fold(
+                    ifLeft = { ResponseEntity.internalServerError().build() },
+                    ifRight = { hasAddedFollow ->
+                        if (hasAddedFollow) ResponseEntity.status(HttpStatus.CREATED).body(Unit)
+                        else ResponseEntity.status(HttpStatus.NO_CONTENT).body(Unit)
+                    }
+                )
+            }
         )
 
     override suspend fun unfollowUser(
@@ -43,7 +55,18 @@ class UserFollowCommandsController(
     ) = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
-            ifRight = { ResponseEntity.ok(Unit) }
+            ifRight = { authenticatedUser ->
+                userFollowCommandsService.unfollowUser(
+                    followerUserId = authenticatedUser.userId,
+                    userId = followRequest.userId
+                ).fold(
+                    ifLeft = { ResponseEntity.internalServerError().build() },
+                    ifRight = { hasRemovedFollow ->
+                        if (hasRemovedFollow) ResponseEntity.status(HttpStatus.CREATED).body(Unit)
+                        else ResponseEntity.status(HttpStatus.NO_CONTENT).body(Unit)
+                    }
+                )
+            }
         )
 
     private fun <T> AuthenticationError.handleAuthenticationError(): ResponseEntity<T> = when (this) {

@@ -18,6 +18,8 @@ group = findProperty("package.group") ?: error("Missing package group")
 
 dependencies {
     api(project(":components:auth"))
+    api(project(":components:events"))
+    api(project(":components:messagebus"))
     api(libs.kotlin.stdlib.jdk8)
     api(libs.kotlin.reflect)
     api(libs.kotlinx.coroutines.core)
