@@ -1,8 +1,8 @@
 rootProject.name = "langsapp"
 
-include(":auth")
-include(":auth-jwt")
-include(":config")
+include(":components:auth")
+include(":components:auth-jwt")
+include(":components:config")
 include(":langsapp")
 include(":user-commands")
 include(":user-follow-commands")

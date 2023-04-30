@@ -11,8 +11,8 @@ plugins {
 }
 
 dependencies {
-    api(project(":auth-jwt"))
-    api(project(":config"))
+    api(project(":components:auth-jwt"))
+    api(project(":components:config"))
     implementation(libs.spring.boot.starter)
 }
 
