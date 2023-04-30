@@ -43,7 +43,7 @@ tasks.withType<Test> {
 // region Open API code generation
 
 val generatedCodeDirectoryPath = "$buildDir${File.separator}open-api-generated"
-val apiSpecPath = "${findProperty("open.api.directory.public")}users_command_api.yaml"
+val apiSpecPath = "${findProperty("open.api.directory.public")}user_command_api.yaml"
 
 tasks.openApiGenerate {
     setProperty("generatorName", "kotlin-spring")

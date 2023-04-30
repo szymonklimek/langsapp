@@ -4,7 +4,7 @@ include(":auth")
 include(":auth-jwt")
 include(":config")
 include(":langsapp")
-include(":users-commands")
+include(":user-commands")
 include(":user-follow-commands")
 
 dependencyResolutionManagement {

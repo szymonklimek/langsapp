@@ -17,7 +17,7 @@ group = findProperty("package.group") ?: error("Missing package group")
 dependencies {
     implementation(project(":auth"))
     implementation(project(":config"))
-    implementation(project(":users-commands"))
+    implementation(project(":user-commands"))
     implementation(project(":user-follow-commands"))
 }
 

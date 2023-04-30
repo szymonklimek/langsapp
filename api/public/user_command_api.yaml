@@ -10,11 +10,11 @@ servers:
 
 paths:
   /user:
-    put:
+    post:
       tags:
-        - users
-      summary: Creates or updates user
-      operationId: upsertUser
+        - user
+      summary: Creates user
+      operationId: createUser
 
       parameters:
         - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
@@ -27,33 +27,38 @@ paths:
         - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
 
       requestBody:
-        description: Updated user
+        description: User to create
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpsertUserRequest'
+              $ref: '#/components/schemas/UserRequest'
         required: true
 
       responses:
-        200:
-          description: Success
+        201:
+          description: Success - user created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserResponse'
+        400:
+          description: Bad request
+          content: { }
         401:
           description: Unauthorized
           content: { }
-        404:
-          description: User not found
+        409:
+          description: User exists already
+          content: { }
+        500:
+          description: Internal server error
           content: { }
 
-  /user/update-properties:
     put:
       tags:
-        - users
-      summary: Updates properties of the user
-      operationId: updateUserProperties
+        - user
+      summary: Updates previously created user
+      operationId: updateUser
 
       parameters:
         - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
@@ -66,32 +71,55 @@ paths:
         - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
 
       requestBody:
-        description: Updated properties
+        description: Updated user object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserProperties'
+              $ref: '#/components/schemas/UserRequest'
         required: true
 
       responses:
         200:
-          description: Success
+          description: Success - user updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateUserProperties'
+                $ref: '#/components/schemas/UserResponse'
+        400:
+          description: Bad request
+          content: { }
         401:
           description: Unauthorized
           content: { }
         404:
           description: User not found
+          content: { }
+        409:
+          description: User not found
+          content: { }
+        500:
+          description: Internal server error
           content: { }
 
 components:
   schemas:
 
-    User:
+    UserRequest:
       type: object
+      description: An object representing complete user
+      properties:
+        name:
+          description: Chosen username
+          type: string
+        avatar_url:
+          description: URL of previously uploaded image of avatar
+          type: string
+      required:
+        - name
+
+    UserResponse:
+      type: object
+      description: An object representing complete
       properties:
         id:
           type: string
@@ -101,33 +129,6 @@ components:
         avatar_url:
           description: URL of avatar image
           type: string
-        properties:
-          description: Additional properties attached to the profile
-          type: object
-          additionalProperties:
-            type: string
       required:
         - id
         - name
-
-    UpsertUserRequest:
-      type: object
-      properties:
-        name:
-          description: Chosen username
-          type: string
-        avatar_url:
-          description: URL of previously uploaded image of avatar
-          type: string
-        properties:
-          description: Set of properties to be added or updated
-          type: object
-          additionalProperties:
-            type: string
-      required:
-        - name
-
-    UpdateUserProperties:
-      type: object
-      additionalProperties:
-        type: string

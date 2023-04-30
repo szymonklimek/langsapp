@@ -3,8 +3,8 @@ package com.klimek.langsapp.service.users.commands
 import com.klimek.langsapp.auth.jwt.AuthenticationError
 import com.klimek.langsapp.auth.jwt.Token
 import com.klimek.langsapp.auth.jwt.TokenAuthenticator
-import com.klimek.langsapp.service.users.generated.UpsertUserRequest
-import com.klimek.langsapp.service.users.generated.User
+import com.klimek.langsapp.service.users.generated.UserRequest
+import com.klimek.langsapp.service.users.generated.UserResponse
 import com.klimek.langsapp.service.users.generated.apis.UserApi
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,9 +15,9 @@ class UserCommandsController(
     private val tokenAuthenticator: TokenAuthenticator
 ) : UserApi {
 
-    override suspend fun updateUserProperties(
+    override suspend fun createUser(
         authorization: String,
-        requestBody: Map<String, String>,
+        userRequest: UserRequest,
         clientDeviceId: String?,
         clientDeviceSystemName: String?,
         clientDeviceSystemVersion: String?,
@@ -25,15 +25,15 @@ class UserCommandsController(
         clientDeviceManufacturer: String?,
         clientAppId: String?,
         clientAppVersion: String?
-    ) = tokenAuthenticator.authenticate(Token(authorization))
+    ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
-            ifRight = { ResponseEntity.ok(requestBody) }
+            ifRight = { ResponseEntity.ok(UserResponse(id = it.userId, name = userRequest.name)) }
         )
 
-    override suspend fun upsertUser(
+    override suspend fun updateUser(
         authorization: String,
-        upsertUserRequest: UpsertUserRequest,
+        userRequest: UserRequest,
         clientDeviceId: String?,
         clientDeviceSystemName: String?,
         clientDeviceSystemVersion: String?,
@@ -41,10 +41,10 @@ class UserCommandsController(
         clientDeviceManufacturer: String?,
         clientAppId: String?,
         clientAppVersion: String?
-    ): ResponseEntity<User> = tokenAuthenticator.authenticate(Token(authorization))
+    ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
-            ifRight = { ResponseEntity.ok(User(id = it.userId, name = upsertUserRequest.name)) }
+            ifRight = { ResponseEntity.ok(UserResponse(id = it.userId, name = userRequest.name)) }
         )
 
     private fun <T> AuthenticationError.handleAuthenticationError(): ResponseEntity<T> = when (this) {
