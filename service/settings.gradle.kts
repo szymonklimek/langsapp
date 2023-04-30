@@ -8,6 +8,7 @@ include(":components:messagebus")
 include(":langsapp")
 include(":user-commands")
 include(":user-follow-commands")
+include(":user-profile-query")
 
 dependencyResolutionManagement {
     repositories {
