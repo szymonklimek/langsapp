@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":components:config"))
     implementation(project(":user-commands"))
     implementation(project(":user-follow-commands"))
+    implementation(project(":user-profile-query"))
 }
 
 tasks.withType<KotlinCompile> {

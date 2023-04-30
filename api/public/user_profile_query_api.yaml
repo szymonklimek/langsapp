@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Langsapp User Profile Query API
+  description: "API for reading user profile"
+  version: 1.0.0
+
+servers:
+  - url: https://api.langsapp.net
+    description: Production server
+
+paths:
+  /profile:
+    get:
+      tags:
+        - user
+      summary: Get current user profile
+      operationId: getCurrentUserProfile
+
+      parameters:
+        - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Name'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Version'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Model'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Manufacturer'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Package-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileResponse'
+        401:
+          description: Unauthorized
+          content: { }
+        500:
+          description: Service unavailable
+          content: { }
+
+components:
+  schemas:
+
+    ProfileResponse:
+      type: object
+      description: | 
+        Full information about user's profile.
+        If 'user' is missing then it has to be created through Langsapp User Commands API first.
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          description: Chosen username
+          type: string
+        avatar_url:
+          description: URL of avatar image
+          type: string
+        following_count:
+          description: Count of followed users
+          type: integer
+        followers_count:
+          description: Count of user's followers
+          type: integer
+      required:
+        - id
+        - name
+        - following_count
+        - followers_count
