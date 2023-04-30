@@ -5,6 +5,6 @@ COPY public /usr/share/nginx/html/doc
 ENV URLS_PRIMARY_NAME="Langsapp Users API"
 ENV URLS="\
 [\
-{url:'doc/user_command_api.yaml',name:'Langsapp User API'},\
-{url:'doc/user_follow_command_api.yaml',name:'Langsapp User Follow API'}\
+{url:'doc/user_commands_api.yaml',name:'Langsapp User Commands API'},\
+{url:'doc/user_follow_commands_api.yaml',name:'Langsapp User Follow Commands API'}\
 ]"

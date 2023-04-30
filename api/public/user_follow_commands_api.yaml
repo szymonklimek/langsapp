@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Langsapp Users API
-  description: "API for managing users"
+  title: Langsapp User Follow Commands API
+  description: "API allowing to follow/unfollow other users"
   version: 1.0.0
 
 servers:
@@ -9,12 +9,12 @@ servers:
     description: Production server
 
 paths:
-  /user:
-    post:
+  /follow:
+    put:
       tags:
-        - user
-      summary: Creates user
-      operationId: createUser
+        - follow
+      summary: Lets current user follow another user
+      operationId: followUser
 
       parameters:
         - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
@@ -27,108 +27,73 @@ paths:
         - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
 
       requestBody:
-        description: User to create
+        description: User id to follow
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/FollowRequest'
         required: true
 
       responses:
         201:
-          description: Success - user created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-        400:
-          description: Bad request
+          description: Success - user follow added
           content: { }
-        401:
-          description: Unauthorized
-          content: { }
-        409:
-          description: User exists already
-          content: { }
-        500:
-          description: Internal server error
-          content: { }
-
-    put:
-      tags:
-        - user
-      summary: Updates previously created user
-      operationId: updateUser
-
-      parameters:
-        - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Id'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Name'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Version'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Model'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Manufacturer'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Package-Id'
-        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
-
-      requestBody:
-        description: Updated user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserRequest'
-        required: true
-
-      responses:
-        200:
-          description: Success - user updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
-        400:
-          description: Bad request
+        204:
+          description: Success - user already followed
           content: { }
         401:
           description: Unauthorized
           content: { }
         404:
-          description: User not found
-          content: { }
-        409:
-          description: User not found
+          description: Not found
           content: { }
         500:
-          description: Internal server error
+          description: Server error
+
+    delete:
+      tags:
+        - follow
+      summary: Lets current user stop following another user
+      operationId: unfollowUser
+
+      parameters:
+        - $ref: 'open_api_common.yaml#/components/parameters/AuthorizationRequired'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Name'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-System-Version'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Model'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-Device-Manufacturer'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Package-Id'
+        - $ref: 'open_api_common.yaml#/components/parameters/Client-App-Version'
+
+      requestBody:
+        description: User id to unfollow
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FollowRequest'
+        required: true
+
+      responses:
+        204:
+          description: User not followed - Follow deleted successfully (No content)
           content: { }
+        401:
+          description: Unauthorized
+          content: { }
+        404:
+          description: Not found
+          content: { }
+        500:
+          description: Server error
 
 components:
   schemas:
 
-    UserRequest:
+    FollowRequest:
       type: object
-      description: An object representing complete user
       properties:
-        name:
-          description: Chosen username
-          type: string
-        avatar_url:
-          description: URL of previously uploaded image of avatar
+        userId:
           type: string
       required:
-        - name
-
-    UserResponse:
-      type: object
-      description: An object representing complete
-      properties:
-        id:
-          type: string
-        name:
-          description: Chosen username
-          type: string
-        avatar_url:
-          description: URL of avatar image
-          type: string
-      required:
-        - id
-        - name
+        - userId

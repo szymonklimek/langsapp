@@ -43,7 +43,7 @@ tasks.withType<Test> {
 // region Open API code generation
 
 val generatedCodeDirectoryPath = "$buildDir${File.separator}open-api-generated"
-val apiSpecPath = "${findProperty("open.api.directory.public")}user_follow_command_api.yaml"
+val apiSpecPath = "${findProperty("open.api.directory.public")}user_follow_commands_api.yaml"
 
 tasks.openApiGenerate {
     setProperty("generatorName", "kotlin-spring")
@@ -58,8 +58,8 @@ tasks.openApiGenerate {
             "useBeanValidation" to "false",
             "useSpringBoot3" to "true",
             "reactive" to "true",
-            "packageName" to "com.klimek.langsapp.service.users.generated",
-            "modelPackage" to "com.klimek.langsapp.service.users.generated"
+            "packageName" to "com.klimek.langsapp.service.user.follow.commands.generated",
+            "modelPackage" to "com.klimek.langsapp.service.user.follow.commands.generated"
         )
     )
 }

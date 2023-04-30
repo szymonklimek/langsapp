@@ -62,8 +62,8 @@ val openApiValidationGroup = "open api validation"
 val apiDirectoryPath = projectDir.absolutePath ?: error("Invalid project path")
 
 val validationTasks = listOf(
-    "UserCommandApi" to "$apiDirectoryPath/public/user_command_api.yaml",
-    "UserFollowCommandApi" to "$apiDirectoryPath/public/user_follow_command_api.yaml"
+    "UserCommandsApi" to "$apiDirectoryPath/public/user_commands_api.yaml",
+    "UserFollowCommandsApi" to "$apiDirectoryPath/public/user_follow_commands_api.yaml"
 ).map {
     tasks.register("validate${it.first}", ValidateTask::class) {
         group = openApiValidationGroup

@@ -3,8 +3,8 @@ package com.klimek.langsapp.service.user.follow.commands
 import com.klimek.langsapp.auth.jwt.AuthenticationError
 import com.klimek.langsapp.auth.jwt.Token
 import com.klimek.langsapp.auth.jwt.TokenAuthenticator
-import com.klimek.langsapp.service.users.generated.FollowRequest
-import com.klimek.langsapp.service.users.generated.apis.FollowApi
+import com.klimek.langsapp.service.user.follow.commands.generated.FollowRequest
+import com.klimek.langsapp.service.user.follow.commands.generated.apis.FollowApi
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

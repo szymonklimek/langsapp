@@ -1,11 +1,11 @@
-package com.klimek.langsapp.service.users.commands
+package com.klimek.langsapp.service.user.commands
 
 import com.klimek.langsapp.auth.jwt.AuthenticationError
 import com.klimek.langsapp.auth.jwt.Token
 import com.klimek.langsapp.auth.jwt.TokenAuthenticator
-import com.klimek.langsapp.service.users.generated.UserRequest
-import com.klimek.langsapp.service.users.generated.UserResponse
-import com.klimek.langsapp.service.users.generated.apis.UserApi
+import com.klimek.langsapp.service.user.commands.generated.UserRequest
+import com.klimek.langsapp.service.user.commands.generated.UserResponse
+import com.klimek.langsapp.service.user.commands.generated.apis.UserApi
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
