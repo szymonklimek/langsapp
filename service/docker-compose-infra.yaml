@@ -10,3 +10,11 @@ services:
     ports:
       - "8500:8500"
       - "8600:8600/udp"
+
+  database:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
