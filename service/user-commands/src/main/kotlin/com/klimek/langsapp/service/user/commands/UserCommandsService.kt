@@ -2,12 +2,12 @@ package com.klimek.langsapp.service.user.commands
 
 import arrow.core.*
 import com.klimek.langsapp.events.generateEventsProperties
+import com.klimek.langsapp.events.store.EventsStoreRepository
 import com.klimek.langsapp.events.user.UserCreatedEvent
 import com.klimek.langsapp.events.user.UserUpdatedEvent
 import com.klimek.langsapp.service.user.commands.event.UserEventsPublisher
 import com.klimek.langsapp.service.user.commands.generated.UserRequest
 import com.klimek.langsapp.service.user.commands.generated.UserResponse
-import com.klimek.langsapp.service.user.commands.storage.UserCommandsRepository
 import com.klimek.langsapp.service.user.query.UserId
 import com.klimek.langsapp.service.user.query.UserName
 import com.klimek.langsapp.service.user.query.UserQueryService
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service
 class UserCommandsService(
     private val userEventsPublisher: UserEventsPublisher,
     private val userQueryService: UserQueryService,
-    private val repository: UserCommandsRepository
+    private val repository: EventsStoreRepository
 ) {
 
     fun createUser(userId: String, userRequest: UserRequest): Either<Error, UserResponse> =

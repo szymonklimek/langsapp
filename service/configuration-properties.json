@@ -2,5 +2,6 @@
   "langsapp/auth.implementation": "FAKE",
   "langsapp/auth.certificate.x509": "",
   "langsapp/auth.private.key": "",
-  "langsapp/auth.private.key.id": ""
+  "langsapp/auth.private.key.id": "",
+  "langsapp/events.store.database.connection.url": "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres"
 }

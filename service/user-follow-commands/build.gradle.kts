@@ -19,6 +19,7 @@ group = findProperty("package.group") ?: error("Missing package group")
 dependencies {
     api(project(":components:auth"))
     api(project(":components:events"))
+    api(project(":components:eventsstore"))
     api(project(":components:messagebus"))
     api(project(":user-query"))
     api(project(":user-follow-query"))

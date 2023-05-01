@@ -19,6 +19,7 @@ group = findProperty("package.group") ?: error("Missing package group")
 dependencies {
     api(project(":components:auth"))
     api(project(":components:events"))
+    api(project(":components:eventsstore"))
     api(project(":components:messagebus"))
     api(project(":user-query"))
     api(libs.kotlin.stdlib.jdk8)
@@ -32,6 +33,12 @@ dependencies {
     api(libs.jackson.module.kotlin)
 
     api(libs.arrow.core)
+
+    api(libs.jetbrains.exposed.core)
+    api(libs.jetbrains.exposed.jdbc)
+    api(libs.jetbrains.exposed.java.time)
+
+    api(libs.postgresql)
 }
 
 tasks.withType<KotlinCompile> {
