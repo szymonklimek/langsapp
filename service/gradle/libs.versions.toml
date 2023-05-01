@@ -4,6 +4,8 @@ kotlin-coroutines = "1.6.1"
 ecwid-consul-api = "1.4.5"
 arrow = "1.2.0-RC"
 auth0-java-jwt = "4.4.0"
+jetbrains-exposed = "0.34.1"
+postgresql = "42.2.27"
 junit-jupiter = "5.0.3"
 
 [libraries]
@@ -23,6 +25,12 @@ ecwid-consul-api = { module = "com.ecwid.consul:consul-api", version.ref = "ecwi
 
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 auth0-java-jwt = { module = "com.auth0:java-jwt", version.ref = "auth0-java-jwt" }
+
+jetbrains-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "jetbrains-exposed" }
+jetbrains-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "jetbrains-exposed" }
+jetbrains-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "jetbrains-exposed" }
+
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
 
 # Test libraries
 
