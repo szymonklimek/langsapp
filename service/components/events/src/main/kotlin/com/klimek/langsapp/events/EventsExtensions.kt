@@ -5,6 +5,5 @@ import java.util.UUID
 
 fun generateEventsProperties() = EventProperties(
     id = UUID.randomUUID().toString(),
-    createdAt = System.currentTimeMillis(),
-    publishedAt = System.currentTimeMillis()
+    createdAt = System.currentTimeMillis()
 )
