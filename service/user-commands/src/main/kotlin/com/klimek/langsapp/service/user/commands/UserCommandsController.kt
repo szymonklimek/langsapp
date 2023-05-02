@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserCommandsController(
     private val tokenAuthenticator: TokenAuthenticator,
-    private val userCommandsService: UserCommandsService
+    private val userCommandsService: UserCommandsService,
 ) : UserApi {
 
     override suspend fun createUser(

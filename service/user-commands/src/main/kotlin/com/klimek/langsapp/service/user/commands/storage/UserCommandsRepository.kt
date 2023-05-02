@@ -10,20 +10,6 @@ import org.springframework.stereotype.Repository
 class UserCommandsRepository {
     private val storage = UserCommandsInMemoryStorage
 
-    fun containsUserWithName(currentUserId: String, userName: String): Either<StorageError, Boolean> =
-        storage
-            .userNamesToIds[userName]
-            .let {
-                it != null && it != currentUserId
-            }
-            .right()
-
-    fun containsUserWithId(currentUserId: String): Either<StorageError, Boolean> =
-        storage
-            .userIdsToNames
-            .containsKey(currentUserId)
-            .right()
-
     fun storeUserCreatedEvent(userCreatedEvent: UserCreatedEvent): Either<StorageError, Unit> =
         storage
             .storeUserCreatedEvent(userCreatedEvent)
