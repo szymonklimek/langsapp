@@ -9,6 +9,7 @@ include(":langsapp")
 include(":user-commands")
 include(":user-follow-commands")
 include(":user-profile-query")
+include(":user-query")
 
 dependencyResolutionManagement {
     repositories {

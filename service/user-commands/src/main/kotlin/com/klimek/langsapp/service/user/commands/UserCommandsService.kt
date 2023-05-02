@@ -8,11 +8,15 @@ import com.klimek.langsapp.service.user.commands.event.UserEventsPublisher
 import com.klimek.langsapp.service.user.commands.generated.UserRequest
 import com.klimek.langsapp.service.user.commands.generated.UserResponse
 import com.klimek.langsapp.service.user.commands.storage.UserCommandsRepository
+import com.klimek.langsapp.service.user.query.UserId
+import com.klimek.langsapp.service.user.query.UserName
+import com.klimek.langsapp.service.user.query.UserQueryService
 import org.springframework.stereotype.Service
 
 @Service
 class UserCommandsService(
     private val userEventsPublisher: UserEventsPublisher,
+    private val userQueryService: UserQueryService,
     private val repository: UserCommandsRepository
 ) {
 
@@ -22,7 +26,7 @@ class UserCommandsService(
                 validateUserNotExists(userId)
             }
             .flatMap {
-                validateUserNameNotSelected(userId, userRequest.name)
+                validateUserNameNotSelectedByOthers(userId, userRequest.name)
             }
             .map {
                 UserCreatedEvent(
@@ -54,7 +58,7 @@ class UserCommandsService(
                 validateUserExists(userId)
             }
             .flatMap {
-                validateUserNameNotSelected(userId, userRequest.name)
+                validateUserNameNotSelectedByOthers(userId, userRequest.name)
             }
             .map {
                 UserUpdatedEvent(
@@ -81,31 +85,34 @@ class UserCommandsService(
             }
 
     private fun validateUserNotExists(userId: String): Either<Error, Unit> =
-        repository.containsUserWithId(userId)
+        userQueryService
+            .getUserById(userId = UserId(userId))
             .fold(
                 ifLeft = { Error.ServiceError.left() },
-                ifRight = { containsUserId ->
-                    if (containsUserId) Error.UserAlreadyExists.left()
+                ifRight = { user ->
+                    if (user != null) Error.UserAlreadyExists.left()
                     else Unit.right()
                 }
             )
 
     private fun validateUserExists(userId: String): Either<Error, Unit> =
-        repository.containsUserWithId(userId)
+        userQueryService
+            .getUserById(userId = UserId(userId))
             .fold(
                 ifLeft = { Error.ServiceError.left() },
-                ifRight = { containsUserId ->
-                    if (!containsUserId) Error.UserNotFound.left()
+                ifRight = { user ->
+                    if (user == null) Error.UserNotFound.left()
                     else Unit.right()
                 }
             )
 
-    private fun validateUserNameNotSelected(userId: String, username: String): Either<Error, Unit> =
-        repository.containsUserWithName(userId, username)
+    private fun validateUserNameNotSelectedByOthers(requestingUserId: String, username: String): Either<Error, Unit> =
+        userQueryService
+            .getUserByName(userName = UserName(username))
             .fold(
                 ifLeft = { Error.ServiceError.left() },
-                ifRight = { containsUserName ->
-                    if (containsUserName) Error.UserNameAlreadySelected.left()
+                ifRight = { user ->
+                    if (user != null && user.userId != UserId(requestingUserId)) Error.UserNameAlreadySelected.left()
                     else Unit.right()
                 }
             )
