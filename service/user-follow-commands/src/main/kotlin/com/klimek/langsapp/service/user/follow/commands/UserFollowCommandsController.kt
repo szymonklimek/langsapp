@@ -33,7 +33,12 @@ class UserFollowCommandsController(
                     followerUserId = authenticatedUser.userId,
                     userId = followRequest.userId
                 ).fold(
-                    ifLeft = { ResponseEntity.internalServerError().build() },
+                    ifLeft = {
+                        if (it is UserFollowCommandsService.Companion.Error.UserNotFound)
+                            ResponseEntity.notFound().build()
+                        else
+                            ResponseEntity.internalServerError().build()
+                    },
                     ifRight = { hasAddedFollow ->
                         if (hasAddedFollow) ResponseEntity.status(HttpStatus.CREATED).body(Unit)
                         else ResponseEntity.status(HttpStatus.NO_CONTENT).body(Unit)
@@ -60,7 +65,12 @@ class UserFollowCommandsController(
                     followerUserId = authenticatedUser.userId,
                     userId = followRequest.userId
                 ).fold(
-                    ifLeft = { ResponseEntity.internalServerError().build() },
+                    ifLeft = {
+                        if (it is UserFollowCommandsService.Companion.Error.UserNotFound)
+                            ResponseEntity.notFound().build()
+                        else
+                            ResponseEntity.internalServerError().build()
+                    },
                     ifRight = { hasRemovedFollow ->
                         if (hasRemovedFollow) ResponseEntity.status(HttpStatus.CREATED).body(Unit)
                         else ResponseEntity.status(HttpStatus.NO_CONTENT).body(Unit)
