@@ -8,6 +8,8 @@ import com.klimek.langsapp.events.follow.UserFollowEvent
 import com.klimek.langsapp.events.generateEventsProperties
 import com.klimek.langsapp.service.user.follow.commands.event.UserFollowEventsPublisher
 import com.klimek.langsapp.service.user.follow.commands.storage.UserFollowCommandsRepository
+import com.klimek.langsapp.service.user.follow.query.FollowerUserId
+import com.klimek.langsapp.service.user.follow.query.UserFollowQueryService
 import com.klimek.langsapp.service.user.query.UserId
 import com.klimek.langsapp.service.user.query.UserQueryService
 import org.springframework.stereotype.Service
@@ -16,14 +18,18 @@ import org.springframework.stereotype.Service
 class UserFollowCommandsService(
     private val userFollowEventsPublisher: UserFollowEventsPublisher,
     private val userFollowCommandsRepository: UserFollowCommandsRepository,
-    private val userQueryService: UserQueryService
+    private val userQueryService: UserQueryService,
+    private val userFollowQueryService: UserFollowQueryService
 ) {
 
     fun followUser(followerUserId: String, userId: String): Either<Error, Boolean> =
         validateUserExists(userId = userId)
             .flatMap {
-                userFollowCommandsRepository
-                    .getLastStoredEvent(followerUserId, userId)
+                userFollowQueryService
+                    .getUserFollow(
+                        followerUserId = FollowerUserId(followerUserId),
+                        userId = com.klimek.langsapp.service.user.follow.query.UserId(userId)
+                    )
                     .mapLeft { Error.ServiceError }
                     .flatMap {
                         if (it?.isFollowed == true) false.right()
@@ -42,7 +48,11 @@ class UserFollowCommandsService(
     fun unfollowUser(followerUserId: String, userId: String): Either<Error, Boolean> =
         validateUserExists(userId)
             .flatMap {
-                userFollowCommandsRepository.getLastStoredEvent(followerUserId, userId)
+                userFollowQueryService
+                    .getUserFollow(
+                        followerUserId = FollowerUserId(followerUserId),
+                        userId = com.klimek.langsapp.service.user.follow.query.UserId(userId)
+                    )
                     .mapLeft { Error.ServiceError }
                     .flatMap {
                         if (it?.isFollowed == false) false.right()
