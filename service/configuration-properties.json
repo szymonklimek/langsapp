@@ -3,5 +3,6 @@
   "langsapp/auth.certificate.x509": "",
   "langsapp/auth.private.key": "",
   "langsapp/auth.private.key.id": "",
-  "langsapp/events.store.database.connection.url": "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres"
+  "langsapp/events.store.database.connection.url": "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres",
+  "langsapp/user.follow.query.database.connection.url": "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres"
 }

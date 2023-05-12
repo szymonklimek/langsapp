@@ -15,11 +15,18 @@ group = findProperty("package.group") ?: error("Missing package group")
 
 
 dependencies {
+    api(project(":components:config"))
     api(project(":components:events"))
     api(project(":components:messagebus"))
     api(libs.kotlin.stdlib.jdk8)
     api(libs.kotlin.reflect)
     api(libs.arrow.core)
+
+    api(libs.jetbrains.exposed.core)
+    api(libs.jetbrains.exposed.jdbc)
+    api(libs.jetbrains.exposed.java.time)
+
+    api(libs.postgresql)
 }
 
 tasks.withType<KotlinCompile> {

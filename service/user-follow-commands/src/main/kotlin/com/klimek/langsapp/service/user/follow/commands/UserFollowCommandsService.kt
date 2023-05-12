@@ -6,8 +6,8 @@ import arrow.core.left
 import arrow.core.right
 import com.klimek.langsapp.events.follow.UserFollowEvent
 import com.klimek.langsapp.events.generateEventsProperties
+import com.klimek.langsapp.service.events.store.EventsStoreRepository
 import com.klimek.langsapp.service.user.follow.commands.event.UserFollowEventsPublisher
-import com.klimek.langsapp.service.user.follow.commands.storage.UserFollowCommandsRepository
 import com.klimek.langsapp.service.user.follow.query.FollowerUserId
 import com.klimek.langsapp.service.user.follow.query.UserFollowQueryService
 import com.klimek.langsapp.service.user.query.UserId
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserFollowCommandsService(
     private val userFollowEventsPublisher: UserFollowEventsPublisher,
-    private val userFollowCommandsRepository: UserFollowCommandsRepository,
+    private val eventsStoreRepository: EventsStoreRepository,
     private val userQueryService: UserQueryService,
     private val userFollowQueryService: UserFollowQueryService
 ) {
@@ -70,7 +70,8 @@ class UserFollowCommandsService(
             }
 
     fun insertAndSendUserFollowEvent(userFollowEvent: UserFollowEvent): Either<Error, Unit> =
-        userFollowCommandsRepository.storeUserFollowEvent(userFollowEvent)
+        eventsStoreRepository
+            .storeUserFollowEvent(userFollowEvent)
             .mapLeft { Error.ServiceError }
             .onRight { userFollowEventsPublisher.sendUserFollowEvent(userFollowEvent) }
 
