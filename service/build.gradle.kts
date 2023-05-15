@@ -54,7 +54,7 @@ val cleanLocalInfrastructure by tasks.registering {
     }
 }
 
-val initConfiguration by tasks.registering {
+val initConsulConfiguration by tasks.registering {
     group = "local development"
     description = "Initialize configuration in local consul container"
 
@@ -71,6 +71,55 @@ val initConfiguration by tasks.registering {
                 }
             }
     }
+}
+
+val createPostgresDatabaseSchema by tasks.registering {
+    group = "local development"
+    description = "Executes SQL scripts for database schemas creations"
+
+    doLast {
+        val containerName = "postgres"
+        val sqlScripts = projectDir
+            .walk()
+            .filter { it.isDirectory && it.name == "sql" }
+            .flatMap { it.walk().filter { file -> file.isFile && file.extension == "sql" } }
+            .sortedBy { it.name }
+
+        sqlScripts.forEach { sqlScript ->
+            exec {
+                println("Copying script ${sqlScript.name} into database container")
+                commandLine("docker")
+                args("cp", sqlScript.absolutePath, "$containerName:/")
+            }
+            exec {
+                println("Executing script: $sqlScript")
+                commandLine("docker")
+                args(
+                    "exec", "-i", containerName,
+                    "psql", "-d", "postgres", "-Upostgres", "-f", sqlScript.name
+                )
+            }
+            exec {
+                println("Deleting $sqlScript from database docker container")
+                commandLine("docker")
+                args(
+                    "exec", "-i", containerName,
+                    "rm", sqlScript.name
+                )
+            }
+        }
+    }
+}
+
+val configureLocalInfrastructure by tasks.registering {
+    group = "local development"
+    description = """
+        Performs all necessary tasks to configure local infrastructure. 
+        Can be executed only after local infra is running, see ${runLocalInfrastructure.name} task. 
+    """.trimIndent()
+
+    dependsOn(initConsulConfiguration)
+    dependsOn(createPostgresDatabaseSchema)
 }
 
 // endregion
