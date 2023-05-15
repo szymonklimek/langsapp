@@ -10,3 +10,23 @@ services:
     ports:
       - "8500:8500"
       - "8600:8600/udp"
+
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector:0.72.0
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    depends_on:
+      - jaeger-service
+    volumes:
+      - ./local-otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+    environment:
+      - JAEGER_ENDPOINT=jaeger-service:14250
+
+  jaeger-service:
+    container_name: jaeger-service
+    image: jaegertracing/all-in-one:1.42.0
+    ports:
+      - "16686:16686"
+      - "14250"
