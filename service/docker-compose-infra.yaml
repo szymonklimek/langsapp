@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 
 services:
 
@@ -10,3 +10,56 @@ services:
     ports:
       - "8500:8500"
       - "8600:8600/udp"
+
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector-contrib:0.76.1
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./local-observability/otel-collector/config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4320:4317"
+    environment:
+      - EXPORT_ENDPOINT=http://grafana_tempo:4317
+      - LOKI_ENDPOINT=http://grafana_loki:3100/loki/api/v1/push
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.2.0
+    volumes:
+      - ./local-observability/grafana:/etc/grafana/provisioning/datasources:ro
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
+
+  # Grafana Loki - log aggregation system
+  # https://grafana.com/oss/loki/
+  grafana-loki:
+    container_name: grafana_loki
+    image: grafana/loki:2.8.6
+    command: [
+      "-print-config-stderr",
+      "-config.file=/etc/loki/local-config.yaml"
+    ]
+    ports:
+      - "3100:3100"
+
+  # Grafana Tempo - tracing backend
+  # https://grafana.com/oss/tempo/
+  grafana-tempo:
+    container_name: grafana_tempo
+    image: grafana/tempo:2.2.4
+    command: [
+      "-distributor.log-received-spans.enabled",
+      "-distributor.log-received-spans.include-attributes",
+      "-server.http-listen-port=3200",
+      "-storage.trace.backend=local",
+      "-storage.trace.local.path=/tmp/tempo/blocks",
+      "-storage.trace.wal.path=/tmp/tempo/wal"
+    ]
+    ports:
+      - "3200:3200"  # tempo
+      - "4317"  # otlp grpc
