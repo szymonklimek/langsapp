@@ -15,6 +15,7 @@ kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 
 spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
 
 jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
@@ -23,6 +24,9 @@ ecwid-consul-api = { module = "com.ecwid.consul:consul-api", version.ref = "ecwi
 
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 auth0-java-jwt = { module = "com.auth0:java-jwt", version.ref = "auth0-java-jwt" }
+
+micrometer-tracing-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel" }
+otel-exporter-otlp = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
 
 # Test libraries
 
