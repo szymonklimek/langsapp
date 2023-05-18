@@ -6,6 +6,7 @@ import com.klimek.langsapp.auth.jwt.TokenAuthenticator
 import com.klimek.langsapp.service.user.commands.generated.UserRequest
 import com.klimek.langsapp.service.user.commands.generated.UserResponse
 import com.klimek.langsapp.service.user.commands.generated.apis.UserApi
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
@@ -15,6 +16,8 @@ class UserCommandsController(
     private val tokenAuthenticator: TokenAuthenticator,
     private val userCommandsService: UserCommandsService,
 ) : UserApi {
+
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     override suspend fun createUser(
         authorization: String,
@@ -27,6 +30,9 @@ class UserCommandsController(
         clientAppId: String?,
         clientAppVersion: String?
     ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
+        .onRight {
+            logger.info("Create user: $userRequest")
+        }
         .fold(
             ifLeft = { it.handleAuthenticationError() },
             ifRight = { authenticatedUser ->

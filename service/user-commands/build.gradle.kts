@@ -20,6 +20,7 @@ dependencies {
     api(project(":components:auth"))
     api(project(":components:events"))
     api(project(":components:messagebus"))
+    api(project(":components:observability"))
     api(project(":user-query"))
     api(libs.kotlin.stdlib.jdk8)
     api(libs.kotlin.reflect)

@@ -17,6 +17,7 @@ group = findProperty("package.group") ?: error("Missing package group")
 dependencies {
     implementation(project(":components:auth"))
     implementation(project(":components:config"))
+    implementation(project(":components:observability"))
     implementation(project(":user-commands"))
     implementation(project(":user-follow-commands"))
     implementation(project(":user-profile-query"))
