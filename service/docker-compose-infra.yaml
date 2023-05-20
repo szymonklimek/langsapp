@@ -16,17 +16,33 @@ services:
     image: otel/opentelemetry-collector:0.72.0
     command: [ "--config=/etc/otel-collector-config.yaml" ]
     depends_on:
-      - jaeger-service
+      - tempo
     volumes:
-      - ./local-otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./local-observability/otel-collector/config.yaml:/etc/otel-collector-config.yaml
     ports:
       - "4317:4317"
     environment:
-      - JAEGER_ENDPOINT=jaeger-service:14250
+      - EXPORT_ENDPOINT=tempo:4317
 
-  jaeger-service:
-    container_name: jaeger-service
-    image: jaegertracing/all-in-one:1.42.0
+  tempo:
+    container_name: tempo
+    image: grafana/tempo
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./local-observability/tempo/tempo.yaml:/etc/tempo.yaml:ro
     ports:
-      - "16686:16686"
-      - "14250"
+      - "3200"  # tempo
+      - "4317"  # otlp grpc
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    volumes:
+      - ./local-observability/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./local-observability/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
