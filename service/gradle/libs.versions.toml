@@ -3,6 +3,7 @@ jvm-target = "17"
 kotlin-coroutines = "1.6.1"
 ecwid-consul-api = "1.4.5"
 arrow = "1.2.0-RC"
+otel-spring = "1.31.0-alpha"
 auth0-java-jwt = "4.4.0"
 junit-jupiter = "5.0.3"
 
@@ -26,6 +27,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 auth0-java-jwt = { module = "com.auth0:java-jwt", version.ref = "auth0-java-jwt" }
 
 otel-api = { module = "io.opentelemetry:opentelemetry-api" }
+otel-spring = { module = "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter", version.ref = "otel-spring" }
 otel-exporter-otlp = { module = "io.opentelemetry:opentelemetry-exporter-otlp" }
 micrometer-tracing-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel" }
 reactor-core = { module = "io.projectreactor:reactor-core" }

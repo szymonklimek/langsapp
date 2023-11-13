@@ -21,6 +21,8 @@ dependencies {
     implementation(project(":user-commands"))
     implementation(project(":user-follow-commands"))
     implementation(project(":user-profile-query"))
+
+    implementation(libs.otel.spring)
 }
 
 tasks.withType<KotlinCompile> {

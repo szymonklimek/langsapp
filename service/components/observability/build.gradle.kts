@@ -13,11 +13,10 @@ plugins {
 dependencies {
     api(project(":components:config"))
     api(libs.spring.boot.starter)
-    api(libs.spring.boot.starter.actuator)
-
     api(libs.otel.api)
+
+    implementation(libs.otel.spring)
     implementation(libs.otel.exporter.otlp)
-    implementation(libs.micrometer.tracing.bridge.otel)
     implementation(libs.reactor.core)
 }
 
