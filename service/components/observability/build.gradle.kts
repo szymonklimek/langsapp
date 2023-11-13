@@ -10,17 +10,18 @@ plugins {
     id("org.graalvm.buildtools.native")
 }
 
-version = findProperty("scm.commit.hash") ?: error("Missing current commit hash")
-group = findProperty("package.group") ?: error("Missing package group")
-
-
 dependencies {
-    implementation(project(":components:auth"))
     implementation(project(":components:config"))
-    implementation(project(":components:observability"))
-    implementation(project(":user-commands"))
-    implementation(project(":user-follow-commands"))
-    implementation(project(":user-profile-query"))
+    api(libs.spring.boot.starter)
+    api(libs.kotlin.stdlib.jdk8)
+    api(libs.otel.api)
+    api(libs.otel.spring)
+    api(libs.otel.exporter.otlp)
+
+    // Dependencies for test controller
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.reactor)
+    implementation(libs.spring.boot.starter.webflux)
 }
 
 tasks.withType<KotlinCompile> {
@@ -28,8 +29,4 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = libs.versions.jvm.target.get()
     }
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }

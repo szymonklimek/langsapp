@@ -2,5 +2,6 @@
   "langsapp/auth.implementation": "FAKE",
   "langsapp/auth.certificate.x509": "",
   "langsapp/auth.private.key": "",
-  "langsapp/auth.private.key.id": ""
+  "langsapp/auth.private.key.id": "",
+  "langsapp/otel.collector.url": "http://127.0.0.1:4320"
 }
