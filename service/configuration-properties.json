@@ -3,5 +3,5 @@
   "langsapp/auth.certificate.x509": "",
   "langsapp/auth.private.key": "",
   "langsapp/auth.private.key.id": "",
-  "langsapp/otel.collector.endpoint.url": "http://127.0.0.1:4317"
+  "langsapp/otel.collector.endpoint.url": "http://127.0.0.1:4320"
 }
