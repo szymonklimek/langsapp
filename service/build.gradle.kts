@@ -24,6 +24,10 @@ plugins {
     id("org.openapi.generator") version "6.4.0" apply false
 }
 
+// Necessary to overwrite default "1.25.0" included in Spring boot plugin version: "3.1.0"
+extra["opentelemetry.version"] = "1.31.0"
+
+
 // region Local infrastructure
 
 val dockerComposeInfraPath = projectDir.absolutePath + File.separator + "docker-compose-infra.yaml"
