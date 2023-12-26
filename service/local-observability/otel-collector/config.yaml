@@ -8,11 +8,22 @@ processors:
   attributes:
     actions:
       - action: insert
-        key: loki.attribute.labels
-        value: container
-      - action: insert
         key: loki.format
-        value: raw
+        value: json
+
+  resource:
+    attributes:
+      - action: insert
+        key: service_name
+        from_attribute: service.name
+
+      - action: insert
+        key: telemetry_sdk_language
+        from_attribute: telemetry.sdk.language
+
+      - action: insert
+        key: loki.resource.labels
+        value: service_name, telemetry_sdk_language, whatever
 
 exporters:
   logging:

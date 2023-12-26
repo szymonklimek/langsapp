@@ -1,6 +1,7 @@
 package com.klimek.langsapp.service.observability
 
-import io.opentelemetry.instrumentation.annotations.WithSpan
+import io.opentelemetry.api.logs.Logger
+import io.opentelemetry.api.trace.Tracer
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -10,55 +11,57 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-/**
- * TODO https://github.com/szymonklimek/langsapp/issues/21
- * Find the solution to make functions annotated with '@WithSpan' produces proper spans as part of single trace
- */
-class ObservabilityTestController: Logging {
+class ObservabilityTestController(
+    private val logger: Logger,
+    private val tracer: Tracer
+) {
 
     @RequestMapping(
         method = [RequestMethod.GET],
         value = ["/observability"]
     )
     suspend fun observability(): ResponseEntity<String> {
-        logger().info("Observability test start")
+        logger
+            .logRecordBuilder()
+            .setBody("Observability test start- custom log").emit()
         function1()
+
+        coroutineScope {
+            launch { function3() }
+            launch { function4() }
+        }
         function2()
         function3()
         function4()
         coroutineScope {
             launch { function2() }
             launch { function1() }
+            function3()
         }
-        logger().info("Observability test end")
         return ResponseEntity.ok("Observability test finished")
     }
 
-    @WithSpan
     suspend fun function1() {
-        logger().info("function1 start")
-        delay(230)
-        logger().info("function1 end")
+        withSpan(tracer, "function1") {
+            delay(230)
+        }
     }
 
-    @WithSpan
     suspend fun function2() {
-        logger().info("function2 start")
-        delay(240)
-        logger().info("function2 end")
+        withSpan(tracer, "function2") {
+            delay(240)
+        }
     }
 
-    @WithSpan
     suspend fun function3() {
-        logger().info("function3 start")
-        delay(210)
-        logger().info("function3 end")
+        withSpan(tracer, "function3") {
+            delay(210)
+        }
     }
 
-    @WithSpan
     suspend fun function4() {
-        logger().info("function4 start")
-        delay(510)
-        logger().info("function4 end")
+        withSpan(tracer, "function4") {
+            delay(510)
+        }
     }
 }
