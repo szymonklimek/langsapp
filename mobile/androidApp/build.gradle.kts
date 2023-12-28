@@ -4,6 +4,8 @@ plugins {
 }
 
 android {
+    namespace = "com.langsapp.android.app"
+
     compileSdk = 32
     defaultConfig {
         applicationId = "com.langsapp.android"
@@ -21,9 +23,14 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+        kotlinCompilerExtensionVersion = "1.5.7"
     }
 }
+
+kotlin {
+    jvmToolchain(17)
+}
+
 
 dependencies {
     implementation(project(":app"))

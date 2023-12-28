@@ -7,7 +7,7 @@ plugins {
 version = "0.1"
 
 kotlin {
-    android()
+    androidTarget()
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -31,9 +31,12 @@ kotlin {
         }
         val androidMain by getting
     }
+
+    jvmToolchain(17)
 }
 
 android {
+    namespace = "com.langsapp.android"
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
