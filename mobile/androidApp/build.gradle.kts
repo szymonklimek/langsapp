@@ -6,11 +6,11 @@ plugins {
 android {
     namespace = "com.langsapp.android.app"
 
-    compileSdk = 32
+    compileSdk = 34
     defaultConfig {
         applicationId = "com.langsapp.android"
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }

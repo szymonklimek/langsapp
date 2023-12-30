@@ -37,10 +37,10 @@ kotlin {
 
 android {
     namespace = "com.langsapp.android"
-    compileSdk = 32
+    compileSdk = 34
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 23
-        targetSdk = 32
+        targetSdk = 34
     }
 }
