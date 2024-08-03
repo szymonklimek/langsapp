@@ -1,6 +1,9 @@
 package com.klimek.langsapp.service.user.commands
 
-import arrow.core.*
+import arrow.core.Either
+import arrow.core.flatMap
+import arrow.core.left
+import arrow.core.right
 import com.klimek.langsapp.events.generateEventsProperties
 import com.klimek.langsapp.events.user.UserCreatedEvent
 import com.klimek.langsapp.events.user.UserUpdatedEvent
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Service
 class UserCommandsService(
     private val userEventsPublisher: UserEventsPublisher,
     private val userQueryService: UserQueryService,
-    private val repository: UserCommandsRepository
+    private val repository: UserCommandsRepository,
 ) {
 
     fun createUser(userId: String, userRequest: UserRequest): Either<Error, UserResponse> =
@@ -33,7 +36,7 @@ class UserCommandsService(
                     eventProperties = generateEventsProperties(),
                     userId = userId,
                     userName = userRequest.name,
-                    avatarUrl = userRequest.avatarUrl
+                    avatarUrl = userRequest.avatarUrl,
                 )
             }
             .flatMap { userCreatedEvent ->
@@ -48,7 +51,7 @@ class UserCommandsService(
                 UserResponse(
                     id = userCreatedEvent.userId,
                     name = userCreatedEvent.userName,
-                    avatarUrl = userCreatedEvent.avatarUrl
+                    avatarUrl = userCreatedEvent.avatarUrl,
                 )
             }
 
@@ -65,7 +68,7 @@ class UserCommandsService(
                     eventProperties = generateEventsProperties(),
                     userId = userId,
                     userName = userRequest.name,
-                    avatarUrl = userRequest.avatarUrl
+                    avatarUrl = userRequest.avatarUrl,
                 )
             }
             .flatMap { userUpdatedEvent ->
@@ -80,7 +83,7 @@ class UserCommandsService(
                 UserResponse(
                     id = userUpdatedEvent.userId,
                     name = userUpdatedEvent.userName!!,
-                    avatarUrl = userUpdatedEvent.avatarUrl
+                    avatarUrl = userUpdatedEvent.avatarUrl,
                 )
             }
 
@@ -90,9 +93,12 @@ class UserCommandsService(
             .fold(
                 ifLeft = { Error.ServiceError.left() },
                 ifRight = { user ->
-                    if (user != null) Error.UserAlreadyExists.left()
-                    else Unit.right()
-                }
+                    if (user != null) {
+                        Error.UserAlreadyExists.left()
+                    } else {
+                        Unit.right()
+                    }
+                },
             )
 
     private fun validateUserExists(userId: String): Either<Error, Unit> =
@@ -101,9 +107,12 @@ class UserCommandsService(
             .fold(
                 ifLeft = { Error.ServiceError.left() },
                 ifRight = { user ->
-                    if (user == null) Error.UserNotFound.left()
-                    else Unit.right()
-                }
+                    if (user == null) {
+                        Error.UserNotFound.left()
+                    } else {
+                        Unit.right()
+                    }
+                },
             )
 
     private fun validateUserNameNotSelectedByOthers(requestingUserId: String, username: String): Either<Error, Unit> =
@@ -112,9 +121,12 @@ class UserCommandsService(
             .fold(
                 ifLeft = { Error.ServiceError.left() },
                 ifRight = { user ->
-                    if (user != null && user.userId != UserId(requestingUserId)) Error.UserNameAlreadySelected.left()
-                    else Unit.right()
-                }
+                    if (user != null && user.userId != UserId(requestingUserId)) {
+                        Error.UserNameAlreadySelected.left()
+                    } else {
+                        Unit.right()
+                    }
+                },
             )
 
     companion object {

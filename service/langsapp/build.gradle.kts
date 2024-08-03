@@ -13,7 +13,6 @@ plugins {
 version = findProperty("scm.commit.hash") ?: error("Missing current commit hash")
 group = findProperty("package.group") ?: error("Missing package group")
 
-
 dependencies {
     implementation(project(":components:auth"))
     implementation(project(":components:config"))

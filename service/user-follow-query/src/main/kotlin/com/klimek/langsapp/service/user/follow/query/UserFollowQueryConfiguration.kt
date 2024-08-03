@@ -12,6 +12,6 @@ class UserFollowQueryConfiguration {
     @Bean
     fun userFollowQueryEventListener(
         messageBus: MessageBus,
-        repository: UserFollowQueryRepository
+        repository: UserFollowQueryRepository,
     ) = MessageBusEventsListener(messageBus = messageBus, repository = repository)
 }

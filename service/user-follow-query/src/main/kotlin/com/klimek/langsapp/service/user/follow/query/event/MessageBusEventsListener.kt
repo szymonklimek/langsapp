@@ -6,7 +6,7 @@ import com.klimek.langsapp.service.user.follow.query.storage.UserFollowQueryRepo
 
 class MessageBusEventsListener(
     messageBus: MessageBus,
-    repository: UserFollowQueryRepository
+    repository: UserFollowQueryRepository,
 ) : EventsListener(repository) {
     init {
         println("Registering listener $this to event bus: $messageBus")

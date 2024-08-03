@@ -8,5 +8,5 @@ package com.klimek.langsapp.events.common
  */
 data class EventProperties(
     val id: String,
-    val createdAt: Long
+    val createdAt: Long,
 )

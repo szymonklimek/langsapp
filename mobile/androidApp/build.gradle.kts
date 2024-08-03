@@ -31,7 +31,6 @@ kotlin {
     jvmToolchain(17)
 }
 
-
 dependencies {
     implementation(project(":app"))
     implementation("androidx.core:core-ktx:1.8.0")

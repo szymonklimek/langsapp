@@ -6,5 +6,5 @@ data class UserProfileProjection(
     val avatarUrl: String?,
     val followersCount: Int,
     val followingCount: Int,
-    val lastComputedEventTimestamp: Long
+    val lastComputedEventTimestamp: Long,
 )

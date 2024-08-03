@@ -36,8 +36,9 @@ val pushDockerImage by tasks.registering {
     description = "Uploads docker image to container registry "
 
     doLast {
-        val containerRegistryUrl = findProperty("container.registry.url")
-            ?: error("Missing container registry url")
+        val containerRegistryUrl =
+            findProperty("container.registry.url")
+                ?: error("Missing container registry url")
         val imageUrl = "$containerRegistryUrl/$imageName"
 
         println("Tagging image: $imageUrl")
@@ -61,17 +62,18 @@ val pushDockerImage by tasks.registering {
 val openApiValidationGroup = "open api validation"
 val apiDirectoryPath = projectDir.absolutePath ?: error("Invalid project path")
 
-val validationTasks = listOf(
-    "UserCommandsApi" to "$apiDirectoryPath/public/user_commands_api.yaml",
-    "UserFollowCommandsApi" to "$apiDirectoryPath/public/user_follow_commands_api.yaml",
-    "UserProfileApi" to "$apiDirectoryPath/public/user_profile_query_api.yaml"
-).map {
-    tasks.register("validate${it.first}", ValidateTask::class) {
-        group = openApiValidationGroup
-        recommend.set(false)
-        inputSpec.set(it.second)
+val validationTasks =
+    listOf(
+        "UserCommandsApi" to "$apiDirectoryPath/public/user_commands_api.yaml",
+        "UserFollowCommandsApi" to "$apiDirectoryPath/public/user_follow_commands_api.yaml",
+        "UserProfileApi" to "$apiDirectoryPath/public/user_profile_query_api.yaml",
+    ).map {
+        tasks.register("validate${it.first}", ValidateTask::class) {
+            group = openApiValidationGroup
+            recommend.set(false)
+            inputSpec.set(it.second)
+        }
     }
-}
 
 val validateOpenApiSpecs by tasks.registering {
     group = openApiValidationGroup

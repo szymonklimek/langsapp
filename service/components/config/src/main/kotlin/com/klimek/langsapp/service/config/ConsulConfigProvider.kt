@@ -4,7 +4,7 @@ import com.ecwid.consul.v1.ConsulClient
 
 class ConsulConfigProvider(
     consulUrl: String,
-    directory: String
+    directory: String,
 ) : ConfigProvider {
     private val values = ConsulClient(consulUrl)
         .getKVValues("$directory/")

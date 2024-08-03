@@ -21,5 +21,4 @@ class MessageBus {
         observersList.add(handler)
         observers[messageClassName.simpleName] = observersList
     }
-
 }

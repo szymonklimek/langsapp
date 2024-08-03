@@ -15,7 +15,6 @@ plugins {
 version = findProperty("scm.commit.hash") ?: error("Missing current commit hash")
 group = findProperty("package.group") ?: error("Missing package group")
 
-
 dependencies {
     api(project(":components:auth"))
     api(project(":components:events"))
@@ -55,7 +54,8 @@ tasks.openApiGenerate {
     setProperty("inputSpec", apiSpecPath)
     setProperty("outputDir", generatedCodeDirectoryPath)
     setProperty(
-        "configOptions", mapOf(
+        "configOptions",
+        mapOf(
             "interfaceOnly" to "true",
             "annotationLibrary" to "none",
             "documentationProvider" to "none",
@@ -63,8 +63,8 @@ tasks.openApiGenerate {
             "useSpringBoot3" to "true",
             "reactive" to "true",
             "packageName" to "com.klimek.langsapp.service.user.follow.commands.generated",
-            "modelPackage" to "com.klimek.langsapp.service.user.follow.commands.generated"
-        )
+            "modelPackage" to "com.klimek.langsapp.service.user.follow.commands.generated",
+        ),
     )
 }
 

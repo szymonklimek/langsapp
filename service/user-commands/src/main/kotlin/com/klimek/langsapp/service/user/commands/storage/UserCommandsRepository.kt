@@ -15,12 +15,10 @@ class UserCommandsRepository {
             .storeUserCreatedEvent(userCreatedEvent)
             .right()
 
-
     fun storeUserUpdatedEvent(userUpdatedEvent: UserUpdatedEvent): Either<StorageError, Unit> =
         storage
             .storeUserUpdatedEvent(userUpdatedEvent)
             .right()
-
 
     companion object {
         class StorageError

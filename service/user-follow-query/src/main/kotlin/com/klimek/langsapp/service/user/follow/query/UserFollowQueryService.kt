@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserFollowQueryService(
-    private val repository: UserFollowQueryRepository
+    private val repository: UserFollowQueryRepository,
 ) {
 
     fun getUserFollow(followerUserId: FollowerUserId, userId: UserId): Either<ServiceError, UserFollow?> =

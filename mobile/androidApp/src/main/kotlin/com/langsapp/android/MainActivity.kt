@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Text
 import com.langsapp.Greeting
 
-
 fun greet(): String {
     return Greeting().greeting()
 }

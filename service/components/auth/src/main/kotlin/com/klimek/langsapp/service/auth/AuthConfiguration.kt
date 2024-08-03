@@ -17,7 +17,7 @@ class AuthConfiguration {
                 "FIREBASE" -> FirebaseTokenAuthenticator(
                     x509Certificate = configProvider.getValue("auth.certificate.x509"),
                     privateKey = configProvider.getValue("auth.private.key"),
-                    privateKeyId = configProvider.getValue("auth.private.key.id")
+                    privateKeyId = configProvider.getValue("auth.private.key.id"),
                 )
 
                 else -> error("Invalid auth implementation: $it")

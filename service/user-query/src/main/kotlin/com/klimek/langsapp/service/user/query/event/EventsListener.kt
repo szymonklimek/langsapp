@@ -7,13 +7,13 @@ import com.klimek.langsapp.service.user.query.UserName
 import com.klimek.langsapp.service.user.query.storage.UserQueryRepository
 
 abstract class EventsListener(
-    private val repository: UserQueryRepository
+    private val repository: UserQueryRepository,
 ) {
     fun onUserCreatedEvent(event: UserCreatedEvent) {
         repository
             .storeUser(
                 UserId(event.userId),
-                UserName(event.userName)
+                UserName(event.userName),
             )
     }
 
@@ -21,7 +21,7 @@ abstract class EventsListener(
         repository
             .storeUser(
                 UserId(event.userId),
-                UserName(event.userName)
+                UserName(event.userName),
             )
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class Configuration(
     @Value("\${langsapp.consul.url}") val consulUrl: String,
-    @Value("\${langsapp.consul.directory}") val directory: String
+    @Value("\${langsapp.consul.directory}") val directory: String,
 ) {
 
     @Bean

@@ -14,5 +14,5 @@ data class UserFollowEvent(
     val eventProperties: EventProperties,
     val followerUserId: String,
     val userId: String,
-    val isFollowed: Boolean
+    val isFollowed: Boolean,
 )

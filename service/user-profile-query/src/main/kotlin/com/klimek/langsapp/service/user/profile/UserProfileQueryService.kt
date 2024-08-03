@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserProfileQueryService(
-    private val repository: UserProfileQueryRepository
+    private val repository: UserProfileQueryRepository,
 ) {
     fun getUserProjection(userId: String): Either<ServiceError, UserProfileProjection?> =
         repository.getUserById(userId)
@@ -28,8 +28,8 @@ class UserProfileQueryService(
                     avatarUrl = event.avatarUrl,
                     followersCount = 0,
                     followingCount = 0,
-                    lastComputedEventTimestamp = event.eventProperties.createdAt
-                )
+                    lastComputedEventTimestamp = event.eventProperties.createdAt,
+                ),
             )
             .mapLeft { ServiceError() }
 
@@ -42,8 +42,8 @@ class UserProfileQueryService(
                     userProfileProjection.copy(
                         name = event.userName,
                         avatarUrl = event.avatarUrl,
-                        lastComputedEventTimestamp = event.eventProperties.createdAt
-                    )
+                        lastComputedEventTimestamp = event.eventProperties.createdAt,
+                    ),
                 )
             }
             .mapLeft { ServiceError() }
@@ -51,7 +51,7 @@ class UserProfileQueryService(
     fun handleUserFollowEvent(event: UserFollowEvent): Either<ServiceError, Unit> =
         Either.zipOrAccumulate(
             repository.getUserById(userId = event.followerUserId),
-            repository.getUserById(userId = event.userId)
+            repository.getUserById(userId = event.userId),
         ) { follower, user ->
             when {
                 follower == null -> ServiceError().left()
@@ -67,21 +67,27 @@ class UserProfileQueryService(
                             follower.copy(
                                 lastComputedEventTimestamp = event.eventProperties.createdAt,
                                 followingCount =
-                                if (event.isFollowed) follower.followingCount + 1
-                                else follower.followingCount - 1
+                                if (event.isFollowed) {
+                                    follower.followingCount + 1
+                                } else {
+                                    follower.followingCount - 1
+                                },
                             ),
                             user.copy(
                                 lastComputedEventTimestamp = event.eventProperties.createdAt,
                                 followersCount =
-                                if (event.isFollowed) user.followersCount + 1
-                                else user.followersCount - 1
-                            )
-                        )
+                                if (event.isFollowed) {
+                                    user.followersCount + 1
+                                } else {
+                                    user.followersCount - 1
+                                },
+                            ),
+                        ),
                     )
                 }
                     .mapLeft { ServiceError() }
                     .map { }
-            }
+            },
         )
 
     companion object {

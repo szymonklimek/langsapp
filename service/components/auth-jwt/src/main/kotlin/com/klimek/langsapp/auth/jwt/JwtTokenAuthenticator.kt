@@ -14,7 +14,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException
  * and expects identifier of the user stored in the `subject` claim
  */
 open class JwtTokenAuthenticator(
-    private val algorithm: Algorithm
+    private val algorithm: Algorithm,
 ) : TokenAuthenticator {
     override fun authenticate(token: Token): Either<AuthenticationError, AuthenticatedUser> = catch({
         JWT.require(algorithm)
@@ -22,8 +22,7 @@ open class JwtTokenAuthenticator(
             .verify(token.value)
             .subject
             .right()
-    })
-    {
+    }) {
         when (it) {
             is TokenExpiredException -> AuthenticationError.TokenExpired(it.message ?: "").left()
             is JWTVerificationException -> AuthenticationError.InvalidToken(it.message ?: "").left()

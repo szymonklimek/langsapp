@@ -9,5 +9,5 @@ value class FollowerUserId(val value: String)
 data class UserFollow(
     val userId: UserId,
     val followerUserId: FollowerUserId,
-    val isFollowed: Boolean
+    val isFollowed: Boolean,
 )

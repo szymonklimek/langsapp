@@ -1,14 +1,15 @@
 import groovy.json.JsonSlurper
 
 buildscript {
-    project.extra.set("scm.commit.hash",
+    project.extra.set(
+        "scm.commit.hash",
         Runtime.getRuntime().exec("git rev-parse --verify --short HEAD").apply { waitFor() }
-            .inputStream.reader().readText().replace("\n", "")
+            .inputStream.reader().readText().replace("\n", ""),
     )
     project.extra.set("package.group", "com.klimek.langsapp")
     project.extra.set(
         "open.api.directory.public",
-        rootDir.parentFile.absolutePath + File.separator + "api" + File.separator + "public" + File.separator
+        rootDir.parentFile.absolutePath + File.separator + "api" + File.separator + "public" + File.separator,
     )
 }
 

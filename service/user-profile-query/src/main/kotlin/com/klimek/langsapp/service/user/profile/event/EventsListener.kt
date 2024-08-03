@@ -6,7 +6,7 @@ import com.klimek.langsapp.events.user.UserUpdatedEvent
 import com.klimek.langsapp.service.user.profile.UserProfileQueryService
 
 abstract class EventsListener(
-    private val service: UserProfileQueryService
+    private val service: UserProfileQueryService,
 ) {
     fun onUserCreatedEvent(event: UserCreatedEvent) {
         service.handleUserCreatedEvent(event)

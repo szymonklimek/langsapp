@@ -14,5 +14,5 @@ data class UserUpdatedEvent(
     val eventProperties: EventProperties,
     val userId: String,
     val userName: String,
-    val avatarUrl: String? = null
+    val avatarUrl: String? = null,
 )

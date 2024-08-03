@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserQueryService(
-    private val repository: UserQueryRepository
+    private val repository: UserQueryRepository,
 ) {
 
     fun getUserById(userId: UserId): Either<ServiceError, User?> =
@@ -17,7 +17,7 @@ class UserQueryService(
                 userName?.let {
                     User(
                         userId = userId,
-                        userName = it
+                        userName = it,
                     )
                 }
             }
@@ -30,7 +30,7 @@ class UserQueryService(
                 userId?.let {
                     User(
                         userId = it,
-                        userName = userName
+                        userName = userName,
                     )
                 }
             }

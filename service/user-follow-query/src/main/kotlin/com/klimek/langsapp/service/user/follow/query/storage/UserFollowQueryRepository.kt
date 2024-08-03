@@ -19,7 +19,7 @@ class UserFollowQueryRepository {
                     UserFollow(
                         userId = userId,
                         followerUserId = followerUserId,
-                        isFollowed = it
+                        isFollowed = it,
                     )
                 }
             }

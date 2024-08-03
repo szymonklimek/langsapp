@@ -12,6 +12,6 @@ class UserQueryConfiguration {
     @Bean
     fun eventsPublisher(
         messageBus: MessageBus,
-        repository: UserQueryRepository
+        repository: UserQueryRepository,
     ) = MessageBusEventsListener(messageBus = messageBus, repository = repository)
 }

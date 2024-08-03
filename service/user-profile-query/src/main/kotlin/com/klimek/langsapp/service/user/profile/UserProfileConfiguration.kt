@@ -11,10 +11,9 @@ class UserProfileConfiguration {
     @Bean
     fun eventsListener(
         messageBus: MessageBus,
-        service: UserProfileQueryService
+        service: UserProfileQueryService,
     ) = MessageBusEventsListener(
         messageBus = messageBus,
-        service = service
+        service = service,
     )
-
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserProfileQueryController(
     private val tokenAuthenticator: TokenAuthenticator,
-    private val userProfileQueryService: UserProfileQueryService
+    private val userProfileQueryService: UserProfileQueryService,
 ) : ProfileApi {
 
     override suspend fun getCurrentUserProfile(
@@ -24,7 +24,7 @@ class UserProfileQueryController(
         clientDeviceModel: String?,
         clientDeviceManufacturer: String?,
         clientAppId: String?,
-        clientAppVersion: String?
+        clientAppVersion: String?,
     ) = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
@@ -43,13 +43,14 @@ class UserProfileQueryController(
                                             name = it.name,
                                             avatarUrl = it.avatarUrl,
                                             followingCount = it.followingCount,
-                                            followersCount = it.followersCount
+                                            followersCount = it.followersCount,
                                         )
-                                    }
-                                ))
-                        }
+                                    },
+                                ),
+                            )
+                        },
                     )
-            }
+            },
         )
 
     private fun <T> AuthenticationError.handleAuthenticationError(): ResponseEntity<T> = when (this) {

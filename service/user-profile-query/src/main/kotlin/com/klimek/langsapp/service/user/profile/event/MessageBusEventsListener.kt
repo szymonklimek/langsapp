@@ -8,7 +8,7 @@ import com.klimek.langsapp.service.user.profile.UserProfileQueryService
 
 class MessageBusEventsListener(
     messageBus: MessageBus,
-    service: UserProfileQueryService
+    service: UserProfileQueryService,
 ) : EventsListener(service) {
     init {
         println("Registering listener $this to event bus: $messageBus")

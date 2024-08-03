@@ -19,7 +19,7 @@ class UserFollowCommandsService(
     private val userFollowEventsPublisher: UserFollowEventsPublisher,
     private val userFollowCommandsRepository: UserFollowCommandsRepository,
     private val userQueryService: UserQueryService,
-    private val userFollowQueryService: UserFollowQueryService
+    private val userFollowQueryService: UserFollowQueryService,
 ) {
 
     fun followUser(followerUserId: String, userId: String): Either<Error, Boolean> =
@@ -28,20 +28,23 @@ class UserFollowCommandsService(
                 userFollowQueryService
                     .getUserFollow(
                         followerUserId = FollowerUserId(followerUserId),
-                        userId = com.klimek.langsapp.service.user.follow.query.UserId(userId)
+                        userId = com.klimek.langsapp.service.user.follow.query.UserId(userId),
                     )
                     .mapLeft { Error.ServiceError }
                     .flatMap {
-                        if (it?.isFollowed == true) false.right()
-                        else insertAndSendUserFollowEvent(
-                            UserFollowEvent(
-                                eventProperties = generateEventsProperties(),
-                                followerUserId = followerUserId,
-                                userId = userId,
-                                isFollowed = true
+                        if (it?.isFollowed == true) {
+                            false.right()
+                        } else {
+                            insertAndSendUserFollowEvent(
+                                UserFollowEvent(
+                                    eventProperties = generateEventsProperties(),
+                                    followerUserId = followerUserId,
+                                    userId = userId,
+                                    isFollowed = true,
+                                ),
                             )
-                        )
-                            .map { true }
+                                .map { true }
+                        }
                     }
             }
 
@@ -51,21 +54,23 @@ class UserFollowCommandsService(
                 userFollowQueryService
                     .getUserFollow(
                         followerUserId = FollowerUserId(followerUserId),
-                        userId = com.klimek.langsapp.service.user.follow.query.UserId(userId)
+                        userId = com.klimek.langsapp.service.user.follow.query.UserId(userId),
                     )
                     .mapLeft { Error.ServiceError }
                     .flatMap {
-                        if (it?.isFollowed == false) false.right()
-                        else
+                        if (it?.isFollowed == false) {
+                            false.right()
+                        } else {
                             insertAndSendUserFollowEvent(
                                 UserFollowEvent(
                                     eventProperties = generateEventsProperties(),
                                     followerUserId = followerUserId,
                                     userId = userId,
-                                    isFollowed = false
-                                )
+                                    isFollowed = false,
+                                ),
                             )
                                 .map { true }
+                        }
                     }
             }
 
@@ -80,9 +85,12 @@ class UserFollowCommandsService(
             .fold(
                 ifLeft = { Error.ServiceError.left() },
                 ifRight = { user ->
-                    if (user == null) Error.UserNotFound.left()
-                    else Unit.right()
-                }
+                    if (user == null) {
+                        Error.UserNotFound.left()
+                    } else {
+                        Unit.right()
+                    }
+                },
             )
 
     companion object {

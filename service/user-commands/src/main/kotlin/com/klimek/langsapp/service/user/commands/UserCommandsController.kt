@@ -25,14 +25,14 @@ class UserCommandsController(
         clientDeviceModel: String?,
         clientDeviceManufacturer: String?,
         clientAppId: String?,
-        clientAppVersion: String?
+        clientAppVersion: String?,
     ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
             ifRight = { authenticatedUser ->
                 userCommandsService.createUser(
                     userId = authenticatedUser.userId,
-                    userRequest = userRequest
+                    userRequest = userRequest,
                 ).fold(
                     ifLeft = {
                         when (it) {
@@ -47,9 +47,9 @@ class UserCommandsController(
                     },
                     ifRight = {
                         ResponseEntity.ok(it)
-                    }
+                    },
                 )
-            }
+            },
         )
 
     override suspend fun updateUser(
@@ -61,14 +61,14 @@ class UserCommandsController(
         clientDeviceModel: String?,
         clientDeviceManufacturer: String?,
         clientAppId: String?,
-        clientAppVersion: String?
+        clientAppVersion: String?,
     ): ResponseEntity<UserResponse> = tokenAuthenticator.authenticate(Token(authorization))
         .fold(
             ifLeft = { it.handleAuthenticationError() },
             ifRight = { authenticatedUser ->
                 userCommandsService.updateUser(
                     userId = authenticatedUser.userId,
-                    userRequest = userRequest
+                    userRequest = userRequest,
                 ).fold(
                     ifLeft = {
                         when (it) {
@@ -83,9 +83,9 @@ class UserCommandsController(
                     },
                     ifRight = {
                         ResponseEntity.ok(it)
-                    }
+                    },
                 )
-            }
+            },
         )
 
     private fun <T> AuthenticationError.handleAuthenticationError(): ResponseEntity<T> = when (this) {

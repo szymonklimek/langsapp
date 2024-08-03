@@ -14,7 +14,6 @@ import java.security.spec.PKCS8EncodedKeySpec
 import java.time.Instant
 import java.util.Base64
 
-
 class JwtTokenAuthenticatorTest {
 
     @Test
@@ -36,10 +35,12 @@ class JwtTokenAuthenticatorTest {
             .sign(algorithm)
         val authResult = JwtTokenAuthenticator(algorithm).authenticate(Token(token))
 
-        assertTrue(authResult.isLeft {
-            it is AuthenticationError.TokenExpired
-                    && it.errorMessage.contains("The Token has expired on ")
-        }) {
+        assertTrue(
+            authResult.isLeft {
+                it is AuthenticationError.TokenExpired &&
+                    it.errorMessage.contains("The Token has expired on ")
+            },
+        ) {
             "Result is unexpectedly:  $authResult"
         }
     }
@@ -59,12 +60,14 @@ class JwtTokenAuthenticatorTest {
                 .replace("\n", "")
         val authResult = JwtTokenAuthenticator(algorithm).authenticate(Token(exampleToken))
 
-        assertTrue(authResult.isLeft {
-            it is AuthenticationError.InvalidToken
-                    && it.errorMessage.contains(
-                "The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA"
-            )
-        }) {
+        assertTrue(
+            authResult.isLeft {
+                it is AuthenticationError.InvalidToken &&
+                    it.errorMessage.contains(
+                        "The Token's Signature resulted invalid when verified using the Algorithm: SHA256withRSA",
+                    )
+            },
+        ) {
             "Result is unexpectedly:  $authResult"
         }
     }
@@ -86,23 +89,25 @@ class JwtTokenAuthenticatorTest {
             Algorithm.RSA256(object : RSAKeyProvider {
                 override fun getPublicKeyById(keyId: String?) = "Not a public key" as RSAPublicKey
                 override fun getPrivateKey(): RSAPrivateKey = "Not a private key" as RSAPrivateKey
-                override fun getPrivateKeyId() = testKeyId
-            })
+                override fun getPrivateKeyId() = TEST_KEY_ID
+            }),
         ).authenticate(Token(exampleToken))
 
-        assertTrue(authResult.isLeft {
-            it is AuthenticationError.InvalidConfiguration
-                    && it.errorMessage.contains(
-                "class java.lang.String cannot be cast to class java.security.interfaces.RSAPublicKey"
-            )
-        }) {
+        assertTrue(
+            authResult.isLeft {
+                it is AuthenticationError.InvalidConfiguration &&
+                    it.errorMessage.contains(
+                        "class java.lang.String cannot be cast to class java.security.interfaces.RSAPublicKey",
+                    )
+            },
+        ) {
             "Result is unexpectedly:  $authResult"
         }
     }
 
     companion object {
 
-        private const val testKeyId = "d643a9d0f27715bee5c37df54d8482d7d13da37d"
+        private const val TEST_KEY_ID = "d643a9d0f27715bee5c37df54d8482d7d13da37d"
 
         private val testPrivateKey = KeyFactory
             .getInstance("RSA")
@@ -130,9 +135,9 @@ class JwtTokenAuthenticatorTest {
                             .trimIndent()
                             .replace("\n", "")
                             .replace("-----BEGIN PRIVATE KEY-----", "")
-                            .replace("-----END PRIVATE KEY-----", "")
-                    )
-                )
+                            .replace("-----END PRIVATE KEY-----", ""),
+                    ),
+                ),
             )
 
         private val testPublicKey = CertificateFactory
@@ -160,15 +165,15 @@ class JwtTokenAuthenticatorTest {
                         .trimIndent()
                         .replace("\n", "")
                         .replace("-----BEGIN CERTIFICATE-----", "")
-                        .replace("-----END CERTIFICATE-----", "")
-                ).inputStream()
+                        .replace("-----END CERTIFICATE-----", ""),
+                ).inputStream(),
             )
             .publicKey
 
         private val algorithm = Algorithm.RSA256(object : RSAKeyProvider {
             override fun getPublicKeyById(keyId: String?) = testPublicKey as RSAPublicKey
             override fun getPrivateKey(): RSAPrivateKey = testPrivateKey as RSAPrivateKey
-            override fun getPrivateKeyId() = testKeyId
+            override fun getPrivateKeyId() = TEST_KEY_ID
         })
     }
 }
