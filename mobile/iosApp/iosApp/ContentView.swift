@@ -2,15 +2,20 @@ import SwiftUI
 import app
 
 struct ContentView: View {
-	let greet = Greeting().greeting()
-
-	var body: some View {
-		Text(greet)
-	}
+    @StateObject var viewModel: AppViewModel
+    
+    var body: some View {
+        switch viewModel.state {
+        case is HomeState:
+            HomeScreen(state: viewModel.state as! HomeState, actionSender: viewModel)
+        default:
+            fatalError("Unknown state: \(viewModel.state)")
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+    static var previews: some View {
+        ContentView(viewModel: .init(keyValueStorage: AppKeyValueStorage()))
+    }
 }
