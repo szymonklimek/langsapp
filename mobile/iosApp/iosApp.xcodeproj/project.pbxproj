@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,13 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		99C99B8577A1205C21BA4743 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */; };
+		EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A32C635FF700B4922C /* AppLogger.swift */; };
+		EB71F7A62C637D9000B4922C /* AppKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */; };
+		EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */; };
+		EB71F7AD2C63FA7E00B4922C /* WelcomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7AC2C63FA7E00B4922C /* WelcomeScreen.swift */; };
+		EB71F7AF2C6416AF00B4922C /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7AE2C6416AF00B4922C /* HomeScreen.swift */; };
+		EB71F7B12C6417F900B4922C /* LoadedHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7B02C6417F900B4922C /* LoadedHomeScreen.swift */; };
+		EB71F7B32C64187E00B4922C /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7B22C64187E00B4922C /* LoadingScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D63107D7807D5D0660C9AE /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EB71F7A32C635FF700B4922C /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeyValueStorage.swift; sourceTree = "<group>"; };
+		EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		EB71F7AC2C63FA7E00B4922C /* WelcomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreen.swift; sourceTree = "<group>"; };
+		EB71F7AE2C6416AF00B4922C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		EB71F7B02C6417F900B4922C /* LoadedHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedHomeScreen.swift; sourceTree = "<group>"; };
+		EB71F7B22C64187E00B4922C /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,11 +90,15 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				EB71F7AA2C63FA5D00B4922C /* Screens */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
+				EB71F7A32C635FF700B4922C /* AppLogger.swift */,
+				EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */,
+				EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -91,6 +109,25 @@
 				8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EB71F7AA2C63FA5D00B4922C /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				EB71F7AB2C63FA6D00B4922C /* Home */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		EB71F7AB2C63FA6D00B4922C /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				EB71F7AC2C63FA7E00B4922C /* WelcomeScreen.swift */,
+				EB71F7AE2C6416AF00B4922C /* HomeScreen.swift */,
+				EB71F7B02C6417F900B4922C /* LoadedHomeScreen.swift */,
+				EB71F7B22C64187E00B4922C /* LoadingScreen.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,8 +244,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB71F7AD2C63FA7E00B4922C /* WelcomeScreen.swift in Sources */,
+				EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */,
+				EB71F7AF2C6416AF00B4922C /* HomeScreen.swift in Sources */,
+				EB71F7B12C6417F900B4922C /* LoadedHomeScreen.swift in Sources */,
+				EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				EB71F7A62C637D9000B4922C /* AppKeyValueStorage.swift in Sources */,
+				EB71F7B32C64187E00B4922C /* LoadingScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
