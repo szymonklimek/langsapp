@@ -1,0 +1,15 @@
+[versions]
+cucumber = "7.18.0"
+
+[libraries]
+
+appium-java = { module = "io.appium:java-client", version = "9.3.0" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version = "5.10.3" }
+junit-platform-suite = { module = "org.junit.platform:junit-platform-suite", version = "1.10.3" }
+cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumber" }
+cucumber-junit-platform-engine = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
+
+[bundles]
+
+junit = ["junit-jupiter", "junit-platform-suite"]
+cucumber = ["cucumber-java", "cucumber-junit-platform-engine"]

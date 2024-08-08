@@ -27,6 +27,7 @@ buildscript {
 plugins {
     id("org.openapi.generator") version "6.4.0" apply false
     id("com.diffplug.spotless") version "6.25.0"
+    id("org.jetbrains.kotlin.jvm") version "1.9.21" apply false
 }
 
 // region Spotless configuration

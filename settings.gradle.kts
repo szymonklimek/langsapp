@@ -7,5 +7,6 @@ dependencyResolutionManagement {
 }
 
 include(":api")
+include("mobile-test")
 includeBuild("mobile")
 includeBuild("service")
