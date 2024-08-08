@@ -81,7 +81,8 @@ fun AppUi(appViewModel: AppViewModel) {
                 }
 
                 else -> {
-                    fadeIn().togetherWith(fadeOut())
+                    fadeIn(animationSpec = tween(0))
+                        .togetherWith(fadeOut(animationSpec = tween(0)))
                 }
             }
         },
