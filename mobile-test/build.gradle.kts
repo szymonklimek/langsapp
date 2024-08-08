@@ -3,9 +3,9 @@ plugins {
 }
 
 dependencies {
-    testImplementation(libs.appium.java)
-    testImplementation(libs.bundles.cucumber)
-    testImplementation(libs.bundles.junit)
+    implementation(libs.appium.java)
+    implementation(libs.bundles.cucumber)
+    implementation(libs.bundles.junit)
 }
 
 tasks {
