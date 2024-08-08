@@ -25,7 +25,7 @@ class HomeTest {
             URL("http://127.0.0.1:4723"), options
         )
         try {
-            val el = driver.findElement(AppiumBy.name("Skip"))
+            val el = driver.findElement(AppiumBy.androidUIAutomator("text(\"Skip\")"))
             el.click()
             driver.pageSource
         } finally {
