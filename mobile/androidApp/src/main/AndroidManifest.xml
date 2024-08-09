@@ -5,6 +5,7 @@
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name="com.langsapp.android.LangsappApplication"
         android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
             android:name="com.langsapp.android.MainActivity"
