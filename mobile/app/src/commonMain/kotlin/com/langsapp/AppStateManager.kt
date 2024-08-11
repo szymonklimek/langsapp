@@ -12,12 +12,24 @@ import com.langsapp.architecture.StateTransition
 import com.langsapp.config.AppConfig
 import com.langsapp.config.KeyValueStorage
 import com.langsapp.config.Log
+import com.langsapp.content.ManageContentRepository
+import com.langsapp.content.ManageContentStateManager
+import com.langsapp.data.ContentDatabase
+import com.langsapp.data.ContentService
+import com.langsapp.data.MockContentService
+import com.langsapp.data.MockUserProfileService
+import com.langsapp.data.UserProfileService
 import com.langsapp.home.HomeNavigationSideEffect
 import com.langsapp.home.HomeRepository
 import com.langsapp.home.HomeStateManager
+import com.langsapp.home.onboarding.OnBoardingRepository
+import com.langsapp.home.onboarding.UserProfileRepository
 import com.langsapp.identity.IdentityAction
 import com.langsapp.identity.IdentityRepository
 import com.langsapp.identity.IdentityStateManager
+import com.langsapp.settings.language.LanguageSettingsRepository
+import com.langsapp.settings.language.LanguageSettingsStateManager
+import com.langsapp.userprofile.upsert.UpsertProfileStateManager
 
 class AppStateManager(
     keyValueStorage: KeyValueStorage = AppConfig.keyValueStorage,
@@ -28,10 +40,25 @@ class AppStateManager(
     var stateObserver: StateObserver<State>? = null
     var sideEffectsConsumer: SideEffectConsumer<SideEffect>? = null
 
+    private val contentService: ContentService = MockContentService()
+    private val contentDatabase: ContentDatabase = ContentDatabase()
+    private val manageContentRepository = ManageContentRepository(contentService, contentDatabase)
+    private val userProfileService: UserProfileService = MockUserProfileService()
+    private val userProfileRepository = UserProfileRepository(
+        identityStateProvider = { identityStateManager.currentState },
+        profileService = userProfileService,
+        keyValueStorage = keyValueStorage,
+    )
+
     private val identityStateManager = IdentityStateManager(
         anonymousUserId = AppConfig.uniqueInstallationId,
         tokenRefreshFunction = { Result.failure(NotImplementedError()) },
         identityRepository = IdentityRepository(keyValueStorage),
+    )
+
+    private val languageSettingsRepository = LanguageSettingsRepository(
+        contentService = contentService,
+        userProfileRepository = userProfileRepository,
     )
 
     private val homeStateManager = HomeStateManager(
@@ -39,6 +66,11 @@ class AppStateManager(
         authConfigProvider = { AppConfig.authConfig },
         homeRepository = HomeRepository(
             keyValueStorage = keyValueStorage,
+            userProfileRepository = userProfileRepository,
+            OnBoardingRepository(
+                userProfileRepository = userProfileRepository,
+                contentRepository = manageContentRepository,
+            ),
         ),
     )
 
@@ -76,6 +108,43 @@ class AppStateManager(
     private fun CommonSideEffect.NavigationSideEffect.handle() {
         when (this) {
             is HomeNavigationSideEffect.SignUp -> sideEffectsConsumer?.onSideEffect(this)
+            is HomeNavigationSideEffect.SelectLanguages -> stateManagersStack.addLast(
+                LanguageSettingsStateManager(languageSettingsRepository)
+                    .apply {
+                        this.stateObserver = this@AppStateManager
+                        this.sideEffectConsumer = this@AppStateManager
+                    },
+            )
+
+            is HomeNavigationSideEffect.CreateProfile -> stateManagersStack.addLast(
+                UpsertProfileStateManager(
+                    currentProfile = null,
+                    userProfileRepository = userProfileRepository,
+                )
+                    .apply {
+                        this.stateObserver = this@AppStateManager
+                        this.sideEffectConsumer = this@AppStateManager
+                    },
+            )
+
+            is HomeNavigationSideEffect.ManageContent -> stateManagersStack.addLast(
+                ManageContentStateManager(
+                    languageSetting = languageSetting,
+                    manageContentRepository = manageContentRepository,
+                ).apply {
+                    this.stateObserver = this@AppStateManager
+                    this.sideEffectConsumer = this@AppStateManager
+                },
+            )
+
+            is CommonSideEffect.Exit -> {
+                stateManagersStack.removeLast().dispose()
+                onNewState(
+                    stateManagersStack.last().currentState,
+                    currentState,
+                    StateTransition(navigationType = StateTransition.Type.BACKWARD),
+                )
+            }
         }
     }
 

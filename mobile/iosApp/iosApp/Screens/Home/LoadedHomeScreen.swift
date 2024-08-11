@@ -24,6 +24,10 @@ struct LoadedHomeScreen: View {
             Button("Sign up") {
                 actionSender.sendAction(action: HomeAction.SignUpTapped())
             }
+            
+            Button("Language settings") {
+                actionSender.sendAction(action: HomeAction.SelectLanguagesTapped())
+            }
         }
     }
 }

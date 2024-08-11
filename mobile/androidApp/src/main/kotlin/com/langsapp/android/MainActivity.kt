@@ -24,12 +24,18 @@ import androidx.compose.ui.platform.LocalContext
 import com.langsapp.android.identity.auth.AppAuthIdentityContract
 import com.langsapp.android.identity.auth.AuthResult
 import com.langsapp.android.logging.Log
+import com.langsapp.android.ui.content.ManageContentScreen
 import com.langsapp.android.ui.home.HomeScreen
+import com.langsapp.android.ui.settings.language.LanguageSettingsScreen
+import com.langsapp.android.ui.userprofile.upsert.UpsertProfileScreen
 import com.langsapp.architecture.CommonSideEffect
 import com.langsapp.architecture.StateTransition
+import com.langsapp.content.ManageContentState
 import com.langsapp.home.HomeNavigationSideEffect
 import com.langsapp.home.HomeState
 import com.langsapp.identity.IdentityAction
+import com.langsapp.settings.language.LanguageSettingsState
+import com.langsapp.userprofile.upsert.UpsertProfileState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
 
@@ -114,6 +120,18 @@ fun AppUi(appViewModel: AppViewModel) {
                 is HomeState -> HomeScreen(
                     actionSender = appViewModel,
                     homeState = it.first as HomeState,
+                )
+                is LanguageSettingsState -> LanguageSettingsScreen(
+                    actionSender = appViewModel,
+                    state = it.first as LanguageSettingsState,
+                )
+                is UpsertProfileState -> UpsertProfileScreen(
+                    actionSender = appViewModel,
+                    state = it.first as UpsertProfileState,
+                )
+                is ManageContentState -> ManageContentScreen(
+                    actionSender = appViewModel,
+                    state = it.first as ManageContentState,
                 )
             }
         }
