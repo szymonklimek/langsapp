@@ -1,11 +1,22 @@
 package com.langsapp.config
 
+import com.langsapp.identity.auth.AuthConfig
 import com.langsapp.platform.randomUUID
 
 object AppConfig {
     lateinit var log: Log
     lateinit var keyValueStorage: KeyValueStorage
     lateinit var uniqueInstallationId: String
+
+    var authConfig: AuthConfig = AuthConfig(
+        // TODO Replace with proper data
+        authorizationEndpoint = "",
+        tokenEndpoint = "",
+        registrationEndpoint = "",
+        endSessionEndpoint = "",
+        clientId = "",
+        redirectUri = "",
+    )
 
     fun init(
         log: Log,
