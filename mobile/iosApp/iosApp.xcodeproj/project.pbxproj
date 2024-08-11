@@ -21,6 +21,12 @@
 		EB1D1D232CB708B000F77D40 /* AuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D222CB708B000F77D40 /* AuthResult.swift */; };
 		EB1D1D252CB7CC7000F77D40 /* AppAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D242CB7CC7000F77D40 /* AppAuthViewModel.swift */; };
 		EB1D1D272CB7DD7700F77D40 /* AuthResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D262CB7DD7700F77D40 /* AuthResponseHandler.swift */; };
+		EB1D1D2B2CB8873900F77D40 /* LanguageSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D2A2CB8873900F77D40 /* LanguageSettingsScreen.swift */; };
+		EB25844A2CD1B1F40084FBE9 /* UpsertProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2584492CD1B1F40084FBE9 /* UpsertProfileScreen.swift */; };
+		EB25844C2CD1B20D0084FBE9 /* InputScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25844B2CD1B20D0084FBE9 /* InputScreen.swift */; };
+		EB25844F2CD1B6540084FBE9 /* ManageContentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB25844E2CD1B6540084FBE9 /* ManageContentScreen.swift */; };
+		EB2584512CD1B6D30084FBE9 /* ContentLoadFailureScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2584502CD1B6D30084FBE9 /* ContentLoadFailureScreen.swift */; };
+		EB2584532CD1B91A0084FBE9 /* ContentLoadedScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2584522CD1B91A0084FBE9 /* ContentLoadedScreen.swift */; };
 		EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A32C635FF700B4922C /* AppLogger.swift */; };
 		EB71F7A62C637D9000B4922C /* AppKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */; };
 		EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */; };
@@ -49,6 +55,12 @@
 		EB1D1D222CB708B000F77D40 /* AuthResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResult.swift; sourceTree = "<group>"; };
 		EB1D1D242CB7CC7000F77D40 /* AppAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAuthViewModel.swift; sourceTree = "<group>"; };
 		EB1D1D262CB7DD7700F77D40 /* AuthResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponseHandler.swift; sourceTree = "<group>"; };
+		EB1D1D2A2CB8873900F77D40 /* LanguageSettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsScreen.swift; sourceTree = "<group>"; };
+		EB2584492CD1B1F40084FBE9 /* UpsertProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsertProfileScreen.swift; sourceTree = "<group>"; };
+		EB25844B2CD1B20D0084FBE9 /* InputScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputScreen.swift; sourceTree = "<group>"; };
+		EB25844E2CD1B6540084FBE9 /* ManageContentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageContentScreen.swift; sourceTree = "<group>"; };
+		EB2584502CD1B6D30084FBE9 /* ContentLoadFailureScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentLoadFailureScreen.swift; sourceTree = "<group>"; };
+		EB2584522CD1B91A0084FBE9 /* ContentLoadedScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentLoadedScreen.swift; sourceTree = "<group>"; };
 		EB71F7A32C635FF700B4922C /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeyValueStorage.swift; sourceTree = "<group>"; };
 		EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -177,9 +189,55 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
+		EB1D1D282CB8862200F77D40 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				EB1D1D292CB8863E00F77D40 /* Language */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EB1D1D292CB8863E00F77D40 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				EB1D1D2A2CB8873900F77D40 /* LanguageSettingsScreen.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		EB2584472CD1B1CA0084FBE9 /* Userprofile */ = {
+			isa = PBXGroup;
+			children = (
+				EB2584482CD1B1DA0084FBE9 /* Upsert */,
+			);
+			path = Userprofile;
+			sourceTree = "<group>";
+		};
+		EB2584482CD1B1DA0084FBE9 /* Upsert */ = {
+			isa = PBXGroup;
+			children = (
+				EB2584492CD1B1F40084FBE9 /* UpsertProfileScreen.swift */,
+				EB25844B2CD1B20D0084FBE9 /* InputScreen.swift */,
+			);
+			path = Upsert;
+			sourceTree = "<group>";
+		};
+		EB25844D2CD1B63C0084FBE9 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				EB25844E2CD1B6540084FBE9 /* ManageContentScreen.swift */,
+				EB2584502CD1B6D30084FBE9 /* ContentLoadFailureScreen.swift */,
+				EB2584522CD1B91A0084FBE9 /* ContentLoadedScreen.swift */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
 		EB71F7AA2C63FA5D00B4922C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EB25844D2CD1B63C0084FBE9 /* Content */,
+				EB2584472CD1B1CA0084FBE9 /* Userprofile */,
+				EB1D1D282CB8862200F77D40 /* Settings */,
 				EB1D1D1B2CB6E55700F77D40 /* Identity */,
 				EB71F7AB2C63FA6D00B4922C /* Home */,
 			);
@@ -315,14 +373,20 @@
 				EB71F7AD2C63FA7E00B4922C /* WelcomeScreen.swift in Sources */,
 				EB1D1D172CB5D74900F77D40 /* ToastMessage.swift in Sources */,
 				EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */,
+				EB25844F2CD1B6540084FBE9 /* ManageContentScreen.swift in Sources */,
 				EB71F7AF2C6416AF00B4922C /* HomeScreen.swift in Sources */,
 				EB1D1D272CB7DD7700F77D40 /* AuthResponseHandler.swift in Sources */,
 				EB71F7B12C6417F900B4922C /* LoadedHomeScreen.swift in Sources */,
+				EB2584532CD1B91A0084FBE9 /* ContentLoadedScreen.swift in Sources */,
 				EB1D1D142CB5D6BD00F77D40 /* ToastMessageModifier.swift in Sources */,
+				EB25844C2CD1B20D0084FBE9 /* InputScreen.swift in Sources */,
 				EB1D1D112CB5D4DE00F77D40 /* ToastMessageView.swift in Sources */,
 				EB1D1D1F2CB6F90700F77D40 /* View_NavigationExtension.swift in Sources */,
+				EB2584512CD1B6D30084FBE9 /* ContentLoadFailureScreen.swift in Sources */,
 				EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				EB25844A2CD1B1F40084FBE9 /* UpsertProfileScreen.swift in Sources */,
+				EB1D1D2B2CB8873900F77D40 /* LanguageSettingsScreen.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				EB1D1D252CB7CC7000F77D40 /* AppAuthViewModel.swift in Sources */,
 				EB1D1D232CB708B000F77D40 /* AuthResult.swift in Sources */,

@@ -14,6 +14,12 @@ struct ContentView: View {
             switch viewModel.state {
             case is HomeState:
                 HomeScreen(state: viewModel.state as! HomeState, actionSender: viewModel)
+            case is LanguageSettingsState:
+                LanguageSettingsScreen(state: viewModel.state as! LanguageSettingsState, actionSender: viewModel)
+            case is UpsertProfileState:
+                UpsertProfileScreen(state: viewModel.state as! UpsertProfileState, actionSender: viewModel)
+            case is ManageContentState:
+                ManageContentScreen(state: viewModel.state as! ManageContentState, actionSender: viewModel)
             default:
                 fatalError("Unknown state: \(viewModel.state)")
             }

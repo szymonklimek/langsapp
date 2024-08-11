@@ -21,6 +21,7 @@ class LangsappApplication : Application() {
             keyValueStorage = object : KeyValueStorage {
                 private val map = mutableMapOf<String, String>()
                 override fun get(key: String): String? = map[key]
+                override fun getAll(): Map<String, String> = map
                 override fun set(key: String, value: String) = map.set(key, value)
                 override fun remove(key: String) {
                     map.remove(key)
