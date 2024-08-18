@@ -30,7 +30,11 @@ abstract class StateManager<
         set(value) {
             Log.d("[$this] $value")
             field = value
-            stateObserver?.onNewState(currentState, null, null)
+            stateObserver?.onNewState(
+                currentState,
+                null,
+                StateTransition(navigationType = StateTransition.Type.FORWARD),
+            )
         }
     var sideEffectConsumer: SideEffectConsumer<SideEffect>? = null
         set(value) {
