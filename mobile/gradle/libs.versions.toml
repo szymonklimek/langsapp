@@ -6,3 +6,12 @@ androidx-compose_material3 = { module = "androidx.wear.compose:compose-material3
 androidx-lifecycle_viewmodel_compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version = "2.6.1" }
 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.9.0-RC" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.0" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.2" }
+
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version = "5.10.3" }
+junit-platform-suite = { module = "org.junit.platform:junit-platform-suite", version = "1.10.3" }
+
+[bundles]
+
+junit = ["junit-jupiter", "junit-platform-suite"]
