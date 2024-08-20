@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
  * @param initialSideEffects List of [SideEffect] emitted at the creation of the class
  * @param handleAction Function that handles [Action]
  * @param handleSideEffect Optional function that can turn [SideEffect] into [Action]
+ * @param onExternalStateCoordination Optional function that turn external [StateChange] into [Action]
  * and be passed back to [StateManager]
  */
 abstract class StateManager<
@@ -24,6 +25,7 @@ abstract class StateManager<
     val initialSideEffects: ArrayDeque<SideEffect>? = null,
     val handleAction: (State, Action) -> ActionResult<State>,
     val handleSideEffect: (suspend (SideEffect) -> Action?)? = null,
+    val onExternalStateCoordination: ((StateChange<com.langsapp.architecture.State>) -> Action?)? = null,
 ) : ActionSender<Action> {
     var currentState = initialState
     var stateObserver: StateObserver<com.langsapp.architecture.State>? = null
@@ -83,6 +85,15 @@ abstract class StateManager<
                 sideEffectConsumer?.onSideEffect(sideEffect)
             } ?: Log.d("[$this] Ignoring side effect: '$sideEffect', consumer is missing")
         }
+    }
+
+    fun onExternalStateChange(stateChange: StateChange<com.langsapp.architecture.State>) {
+        onExternalStateCoordination
+            ?.invoke(stateChange)
+            ?.let { action ->
+                Log.d("[$this] Sending action: '$action' from external state: '$stateChange'")
+                sendAction(action)
+            }
     }
 
     fun dispose() {
