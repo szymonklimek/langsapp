@@ -5,18 +5,20 @@ import com.langsapp.architecture.StateManager
 import com.langsapp.home.welcome.WelcomeSlide
 
 class HomeStateManager(
-    shouldShowWelcome: () -> Boolean,
     welcomeSlides: List<WelcomeSlide>,
     homeRepository: HomeRepository,
 ) : StateManager<HomeState, HomeAction>(
-    initialState = if (shouldShowWelcome()) HomeState.Welcome(welcomeSlides) else HomeState.Loading,
-    initialSideEffects = if (shouldShowWelcome()) null else ArrayDeque(listOf(HomeSideEffect.FetchHomeDataSideEffect)),
-    handleAction = { previousState, action ->
+    initialState = if (!homeRepository.hasShownWelcome()) HomeState.Welcome(welcomeSlides) else HomeState.Loading,
+    initialSideEffects = if (!homeRepository.hasShownWelcome()) null else ArrayDeque(listOf(HomeSideEffect.FetchHomeDataSideEffect)),
+    handleAction = { currentState, action ->
         when (action) {
-            HomeAction.SkipTapped -> ActionResult(
-                newState = HomeState.Loading,
-                sideEffects = ArrayDeque(listOf(HomeSideEffect.FetchHomeDataSideEffect)),
-            )
+            HomeAction.SkipTapped -> {
+                homeRepository.setHasShownWelcome(true)
+                ActionResult(
+                    newState = HomeState.Loading,
+                    sideEffects = ArrayDeque(listOf(HomeSideEffect.FetchHomeDataSideEffect)),
+                )
+            }
 
             is HomeAction.HomeDataLoaded -> ActionResult(
                 newState = HomeState.Loaded,
