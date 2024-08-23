@@ -21,23 +21,20 @@ class AppStateManager(keyValueStorage: KeyValueStorage = AppConfig.keyValueStora
     var stateObserver: StateObserver<State>? = null
     var sideEffectsConsumer: SideEffectConsumer<SideEffect>? = null
 
-    private val appStateRepository = AppStateRepository(keyValueStorage)
-    private val stateManagersStack = ArrayDeque<StateManager<out State, out Action>>(
-        listOf(
-            HomeStateManager(
-                shouldShowWelcome = { !appStateRepository.hasShownWelcome() },
-                welcomeSlides = listOf(),
-                homeRepository = HomeRepository(),
-            ).apply {
-                stateObserver = this@AppStateManager
-                sideEffectConsumer = this@AppStateManager
-            },
-        ),
+    private val homeStateManager = HomeStateManager(
+        welcomeSlides = listOf(),
+        homeRepository = HomeRepository(keyValueStorage),
     )
+
+    private val stateManagersStack = ArrayDeque<StateManager<out State, out Action>>(listOf(homeStateManager))
 
     init {
         Log.d("$this")
-        currentState = stateManagersStack.last().currentState
+        stateManagersStack.last().let {
+            currentState = it.currentState
+            it.stateObserver = this
+            it.sideEffectConsumer = this
+        }
     }
 
     fun sendAction(action: Action) {
@@ -54,6 +51,7 @@ class AppStateManager(keyValueStorage: KeyValueStorage = AppConfig.keyValueStora
 
     override fun onNewState(state: State, previousState: State?, transition: StateTransition?) {
         Log.d("state: $state, transition: $transition")
+        currentState = state
         stateObserver?.onNewState(state, previousState, transition)
     }
 
