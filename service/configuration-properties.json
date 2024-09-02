@@ -1,5 +1,0 @@
-{
-  "langsapp/auth.implementation": "FAKE",
-  "langsapp/auth.keycloak.url": "",
-  "langsapp/auth.keycloak.realm": ""
-}

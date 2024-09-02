@@ -2,7 +2,6 @@ rootProject.name = "langsapp"
 
 include(":components:auth")
 include(":components:auth-jwt")
-include(":components:config")
 include(":components:events")
 include(":components:messagebus")
 include(":langsapp")

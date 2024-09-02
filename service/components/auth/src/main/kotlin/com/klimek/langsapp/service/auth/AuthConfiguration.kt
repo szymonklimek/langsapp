@@ -3,13 +3,22 @@ package com.klimek.langsapp.service.auth
 import com.klimek.langsapp.auth.jwt.TokenAuthenticator
 import com.klimek.langsapp.service.auth.certificates.JWK
 import com.klimek.langsapp.service.auth.certificates.KeysResponse
-import com.klimek.langsapp.service.config.ConfigProvider
 import org.springframework.aot.hint.annotation.RegisterReflectionForBinding
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class AuthConfiguration {
+
+    @Value("\${auth.implementation}")
+    var authImplementation: String? = null
+
+    @Value("\${auth.keycloak.base.url}")
+    var keycloakBaseUrl: String? = null
+
+    @Value("\${auth.keycloak.realm}")
+    var keycloakRealm: String? = null
 
     @RegisterReflectionForBinding(
         classes = [
@@ -18,17 +27,15 @@ class AuthConfiguration {
         ],
     )
     @Bean
-    fun tokenAuthenticator(configProvider: ConfigProvider): TokenAuthenticator =
-        configProvider.getValue("auth.implementation").let {
-            when (it) {
-                "FAKE" -> FakeTokenAuthenticator
+    fun tokenAuthenticator(): TokenAuthenticator =
+        when (authImplementation) {
+            "FAKE" -> FakeTokenAuthenticator
 
-                "KEYCLOAK" -> KeyCloakTokenAuthenticator(
-                    baseUrl = configProvider.getValue("auth.keycloak.url"),
-                    realm = configProvider.getValue("auth.keycloak.realm"),
-                )
+            "KEYCLOAK" -> KeyCloakTokenAuthenticator(
+                baseUrl = keycloakBaseUrl!!,
+                realm = keycloakRealm!!,
+            )
 
-                else -> error("Invalid auth implementation: $it")
-            }
+            else -> error("Invalid auth implementation: $authImplementation")
         }
 }

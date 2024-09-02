@@ -1,4 +1,4 @@
-package com.szklimek.service.auth.core.certificates
+package com.klimek.langsapp.service.auth
 
 import com.klimek.langsapp.service.auth.certificates.KeyCloakAuthenticationCertificateProvider
 import okhttp3.mockwebserver.MockResponse

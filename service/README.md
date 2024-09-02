@@ -11,26 +11,6 @@ located in [langsapp directory](langsapp).
 
 ## Build and run locally
 
-### Infrastructure
-
-Service requires Consul, which can be provided with docker compose by running following tasks:
-
-```shell
-./gradlew runLocalInfrastructure 
-```
-
-Once Consule container is ready, the necessary configuration can be uploaded via:
-
-```shell
-./gradlew initConfiguration
-```
-
-In case fresh infrastructure state is needed, current one can be cleaned by:
-
-```shell
-./gradlew cleanLocalInfrastructure
-```
-
 ### Running service
 
 Run gradle task

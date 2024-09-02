@@ -10,7 +10,6 @@ plugins {
 
 dependencies {
     api(project(":components:auth-jwt"))
-    api(project(":components:config"))
     implementation(libs.spring.boot.starter.webflux)
     implementation(libs.spring.boot.starter.validation)
 
