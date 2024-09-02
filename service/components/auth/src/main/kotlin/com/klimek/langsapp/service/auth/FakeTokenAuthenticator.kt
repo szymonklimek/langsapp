@@ -8,6 +8,9 @@ import com.klimek.langsapp.auth.jwt.Token
 import com.klimek.langsapp.auth.jwt.TokenAuthenticator
 
 object FakeTokenAuthenticator : TokenAuthenticator {
-    override fun authenticate(token: Token): Either<AuthenticationError, AuthenticatedUser> =
+    override fun authenticate(
+        token: Token,
+        skipVerification: Boolean,
+    ): Either<AuthenticationError, AuthenticatedUser> =
         AuthenticatedUser(userId = token.value).right()
 }

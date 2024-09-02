@@ -1,6 +1,5 @@
 {
   "langsapp/auth.implementation": "FAKE",
-  "langsapp/auth.certificate.x509": "",
-  "langsapp/auth.private.key": "",
-  "langsapp/auth.private.key.id": ""
+  "langsapp/auth.keycloak.url": "",
+  "langsapp/auth.keycloak.realm": ""
 }
