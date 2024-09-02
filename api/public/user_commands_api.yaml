@@ -7,6 +7,8 @@ info:
 servers:
   - url: https://api.langsapp.net
     description: Production server
+  - url: http://localhost:8080
+    description: Local server
 
 paths:
   /user:
