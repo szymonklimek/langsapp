@@ -21,5 +21,5 @@ plugins {
 
     id("org.graalvm.buildtools.native") version "0.9.20" apply false
 
-    id("org.openapi.generator") version "6.4.0" apply false
+    id("org.openapi.generator") version "7.8.0" apply false
 }
