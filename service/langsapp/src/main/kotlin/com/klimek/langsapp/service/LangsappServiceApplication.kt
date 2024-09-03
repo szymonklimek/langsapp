@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource
 @SpringBootApplication
 @PropertySource(
     "classpath:auth.properties",
+    "classpath:observability.properties",
 )
 class LangsappServiceApplication
 

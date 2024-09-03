@@ -1,0 +1,50 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+
+processors:
+  batch:
+  attributes:
+    actions:
+      - action: insert
+        key: loki.format
+        value: json
+
+  resource:
+    attributes:
+      - action: insert
+        key: service_name
+        from_attribute: service.name
+
+      - action: insert
+        key: telemetry_sdk_language
+        from_attribute: telemetry.sdk.language
+
+      - action: insert
+        key: loki.resource.labels
+        value: service_name, telemetry_sdk_language
+
+exporters:
+  logging:
+    loglevel: debug
+  otlp:
+    endpoint: ${env:EXPORT_ENDPOINT}
+    tls:
+      insecure: true
+  loki:
+    endpoint: ${env:LOKI_ENDPOINT}
+
+service:
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [ batch ]
+      exporters: [ otlp, logging ]
+    logs:
+      receivers: [ otlp ]
+      processors: [ attributes ]
+      exporters: [ loki, logging ]
+  telemetry:
+    logs:
+      level: debug
