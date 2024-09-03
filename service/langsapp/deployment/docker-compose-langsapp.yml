@@ -10,3 +10,19 @@ services:
       - AUTH_KEYCLOAK_REALM=${AUTH_KEYCLOAK_REALM}
     ports:
       - "8282:8080"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        window: 300s
+      resources:
+        limits:
+          cpus: '0.60'
+          memory: 500M
+        reservations:
+          cpus: '0.20'
+          memory: 250M
+    networks:
+      - components_network
+networks:
+  components_network:
+    external: true
