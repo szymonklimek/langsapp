@@ -3,7 +3,7 @@ version: '3.3'
 services:
   service:
     container_name: service-langsapp
-    image: "${CONTAINER_REGISTRY_URL}/langsapp:${LANGSAPP_IMAGE_VERSION}"
+    image: "${CONTAINER_REGISTRY_URL}langsapp:${LANGSAPP_IMAGE_VERSION}"
     environment:
       - AUTH_IMPLEMENTATION=${AUTH_IMPLEMENTATION}
       - AUTH_KEYCLOAK_BASE_URL=${AUTH_KEYCLOAK_BASE_URL}
