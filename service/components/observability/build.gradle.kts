@@ -15,6 +15,7 @@ dependencies {
     api(libs.kotlin.stdlib.jdk8)
     api(libs.otel.api)
     implementation(libs.otel.sdk)
+    implementation(libs.otel.spring)
     implementation(libs.otel.exporter.otlp)
     implementation(libs.otel.extension.kotlin)
 
