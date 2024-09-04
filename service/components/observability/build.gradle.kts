@@ -14,9 +14,9 @@ dependencies {
     api(libs.spring.boot.starter)
     api(libs.kotlin.stdlib.jdk8)
     api(libs.otel.api)
-    api(libs.otel.spring)
-    api(libs.otel.exporter.otlp)
-    api("io.opentelemetry:opentelemetry-extension-kotlin")
+    implementation(libs.otel.sdk)
+    implementation(libs.otel.exporter.otlp)
+    implementation(libs.otel.extension.kotlin)
 
     // Dependencies for test controller
     implementation(libs.kotlinx.coroutines.core)

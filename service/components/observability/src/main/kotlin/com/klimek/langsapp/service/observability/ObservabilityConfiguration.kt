@@ -4,11 +4,8 @@ import io.opentelemetry.api.OpenTelemetry
 import io.opentelemetry.api.common.AttributeKey
 import io.opentelemetry.api.common.Attributes
 import io.opentelemetry.api.logs.Logger
-import io.opentelemetry.api.logs.LoggerProvider
 import io.opentelemetry.api.trace.Tracer
-import io.opentelemetry.api.trace.TracerProvider
-import io.opentelemetry.exporter.otlp.http.logs.OtlpHttpLogRecordExporter
-import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter
+import io.opentelemetry.exporter.otlp.logs.OtlpGrpcLogRecordExporter
 import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter
 import io.opentelemetry.sdk.OpenTelemetrySdk
 import io.opentelemetry.sdk.logs.SdkLoggerProvider
@@ -58,22 +55,22 @@ class ObservabilityConfiguration {
                     )
                     .build()
             )
-//            .setLoggerProvider(
-//                SdkLoggerProvider
-//                    .builder()
-//                    .setResource(resource)
-//                    .addLogRecordProcessor(
-//                        BatchLogRecordProcessor
-//                            .builder(
-//                                OtlpHttpLogRecordExporter
-//                                    .builder()
-//                                    .setEndpoint(otelCollectorUrl!!)
-//                                    .build()
-//                            )
-//                            .build()
-//                    )
-//                    .build()
-//            )
+            .setLoggerProvider(
+                SdkLoggerProvider
+                    .builder()
+                    .setResource(resource)
+                    .addLogRecordProcessor(
+                        BatchLogRecordProcessor
+                            .builder(
+                                OtlpGrpcLogRecordExporter
+                                    .builder()
+                                    .setEndpoint(otelCollectorUrl!!)
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .build()
+            )
             .build()
 
     @Bean
