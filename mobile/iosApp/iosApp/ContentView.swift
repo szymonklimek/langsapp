@@ -4,15 +4,47 @@ import app
 struct ContentView: View {
     @StateObject var viewModel: AppViewModel
     @SwiftUI.State var toastMessage: ToastMessage? = nil
+    @SwiftUI.State var showAuthentication = false
+    @SwiftUI.State var authResult: AuthResult? = nil
+    @SwiftUI.State var authConfig: AuthConfig? = nil
+    
     
     var body: some View {
-        switch viewModel.state {
-        case is HomeState:
-            HomeScreen(state: viewModel.state as! HomeState, actionSender: viewModel)
-                .onReceive(viewModel.sideEffectsSubject) { handleSideEffect(sideEffect: $0)}
-                .toastView(toastMessage: $toastMessage)
-        default:
-            fatalError("Unknown state: \(viewModel.state)")
+        NavigationView {
+            switch viewModel.state {
+            case is HomeState:
+                HomeScreen(state: viewModel.state as! HomeState, actionSender: viewModel)
+            default:
+                fatalError("Unknown state: \(viewModel.state)")
+            }
+        }
+        .onReceive(viewModel.sideEffectsSubject) { handleSideEffect(sideEffect: $0)}
+        .toastView(toastMessage: $toastMessage)
+        .navigate(
+            to: AppAuthScreen(
+                authConfig: $authConfig,
+                showAuthentication: $showAuthentication,
+                authResult: $authResult
+            ),
+            when: $showAuthentication
+        )
+        .onChange(of: authResult) { value in
+            AppLogger().d(message: "Auth result changed to: \(String(describing: value))")
+            if case .SignedIn(
+                let accessToken,
+                let refreshToken,
+                let userId,
+                let accessTokenExpiresAtTimestampMs
+            ) = value {
+                viewModel.sendAction(
+                    action: IdentityAction.UserSignedIn(
+                        accessToken: accessToken,
+                        refreshToken: refreshToken,
+                        userId: userId,
+                        accessTokenExpiresAtTimestampMs: accessTokenExpiresAtTimestampMs
+                    )
+                )
+            }
         }
     }
     
@@ -21,6 +53,9 @@ struct ContentView: View {
         switch sideEffect {
         case is CommonSideEffectShowPopUpMessage:
             toastMessage = ToastMessage(message: (sideEffect as!CommonSideEffectShowPopUpMessage).message)
+        case is HomeNavigationSideEffect.SignUp:
+            authConfig = (sideEffect as!HomeNavigationSideEffect.SignUp).authConfig
+            showAuthentication = true
         default:
             AppLogger().e(message: "Unknown SideEffect: \(sideEffect)")
         }
