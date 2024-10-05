@@ -21,6 +21,9 @@ struct LoadedHomeScreen: View {
     var body: some View {
         VStack {
             Text("Home loaded")
+            Button("Sign up") {
+                actionSender.sendAction(action: HomeAction.SignUpTapped())
+            }
         }
     }
 }
