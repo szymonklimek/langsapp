@@ -19,6 +19,12 @@ val buildProperties =
                 .substring(3)
                 .toInt()
                 .toString(),
+        "APPAUTH_AUTHORIZATION_ENDPOINT" to gradle.extra.get("appauth.authorization.endpoint"),
+        "APPAUTH_TOKEN_ENDPOINT" to gradle.extra.get("appauth.token.endpoint"),
+        "APPAUTH_REGISTRATION_ENDPOINT" to gradle.extra.get("appauth.registration.endpoint"),
+        "APPAUTH_ENDSESSION_ENDPOINT" to gradle.extra.get("appauth.endsession.endpoint"),
+        "APPAUTH_CLIENT_ID" to gradle.extra.get("appauth.client.id"),
+        "APPAUTH_REDIRECT_URI" to gradle.extra.get("appauth.redirect.uri"),
     )
 val buildConfigGenerator by tasks.registering(Sync::class) {
     description = "Create shared build configuration class containing static properties"
