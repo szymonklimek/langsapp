@@ -1,0 +1,6 @@
+appauth.authorization.endpoint=
+appauth.token.endpoint=
+appauth.registration.endpoint=
+appauth.endsession.endpoint=
+appauth.client.id=
+appauth.redirect.uri=
