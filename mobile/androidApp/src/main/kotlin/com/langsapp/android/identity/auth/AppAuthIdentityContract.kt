@@ -26,6 +26,9 @@ class AppAuthIdentityContract : ActivityResultContract<AuthConfig, AuthResult>()
                 ),
             )
         }
+            .onFailure {
+                Log.e("Failed to authenticate user. Reason: $it. ${it.stackTrace.take(2).joinToString(", ")}")
+            }
             .getOrElse { AuthResult.Error }
     }
 }

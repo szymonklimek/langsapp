@@ -22,6 +22,7 @@ struct ContentView: View {
         .toastView(toastMessage: $toastMessage)
         .navigate(
             to: AppAuthScreen(
+                viewModel: AppAuthViewModel(),
                 authConfig: $authConfig,
                 showAuthentication: $showAuthentication,
                 authResult: $authResult
