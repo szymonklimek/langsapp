@@ -12,6 +12,10 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		99C99B8577A1205C21BA4743 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */; };
+		EB1D1D112CB5D4DE00F77D40 /* ToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D102CB5D4DE00F77D40 /* ToastMessageView.swift */; };
+		EB1D1D142CB5D6BD00F77D40 /* ToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D132CB5D6BD00F77D40 /* ToastMessageModifier.swift */; };
+		EB1D1D172CB5D74900F77D40 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D162CB5D74900F77D40 /* ToastMessage.swift */; };
+		EB1D1D192CB5EBBA00F77D40 /* View_ToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D182CB5EBBA00F77D40 /* View_ToastMessageView.swift */; };
 		EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A32C635FF700B4922C /* AppLogger.swift */; };
 		EB71F7A62C637D9000B4922C /* AppKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */; };
 		EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */; };
@@ -31,6 +35,10 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D63107D7807D5D0660C9AE /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EB1D1D102CB5D4DE00F77D40 /* ToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageView.swift; sourceTree = "<group>"; };
+		EB1D1D132CB5D6BD00F77D40 /* ToastMessageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageModifier.swift; sourceTree = "<group>"; };
+		EB1D1D162CB5D74900F77D40 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
+		EB1D1D182CB5EBBA00F77D40 /* View_ToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View_ToastMessageView.swift; sourceTree = "<group>"; };
 		EB71F7A32C635FF700B4922C /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeyValueStorage.swift; sourceTree = "<group>"; };
 		EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -90,6 +98,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				EB1D1D122CB5D68300F77D40 /* CommonUi */,
 				EB71F7AA2C63FA5D00B4922C /* Screens */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF82242A565900829871 /* ContentView.swift */,
@@ -109,6 +118,25 @@
 				8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EB1D1D122CB5D68300F77D40 /* CommonUi */ = {
+			isa = PBXGroup;
+			children = (
+				EB1D1D152CB5D6DB00F77D40 /* ToastMessage */,
+			);
+			path = CommonUi;
+			sourceTree = "<group>";
+		};
+		EB1D1D152CB5D6DB00F77D40 /* ToastMessage */ = {
+			isa = PBXGroup;
+			children = (
+				EB1D1D132CB5D6BD00F77D40 /* ToastMessageModifier.swift */,
+				EB1D1D102CB5D4DE00F77D40 /* ToastMessageView.swift */,
+				EB1D1D162CB5D74900F77D40 /* ToastMessage.swift */,
+				EB1D1D182CB5EBBA00F77D40 /* View_ToastMessageView.swift */,
+			);
+			path = ToastMessage;
 			sourceTree = "<group>";
 		};
 		EB71F7AA2C63FA5D00B4922C /* Screens */ = {
@@ -244,10 +272,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB1D1D192CB5EBBA00F77D40 /* View_ToastMessageView.swift in Sources */,
 				EB71F7AD2C63FA7E00B4922C /* WelcomeScreen.swift in Sources */,
+				EB1D1D172CB5D74900F77D40 /* ToastMessage.swift in Sources */,
 				EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */,
 				EB71F7AF2C6416AF00B4922C /* HomeScreen.swift in Sources */,
 				EB71F7B12C6417F900B4922C /* LoadedHomeScreen.swift in Sources */,
+				EB1D1D142CB5D6BD00F77D40 /* ToastMessageModifier.swift in Sources */,
+				EB1D1D112CB5D4DE00F77D40 /* ToastMessageView.swift in Sources */,
 				EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,

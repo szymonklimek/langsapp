@@ -7,11 +7,13 @@
 //
 
 import app
+import Combine
 import Foundation
 
 class AppViewModel: ObservableObject, StateObserver, SideEffectConsumer, ActionSender {
     
     @Published var state: app.State
+    let sideEffectsSubject = PassthroughSubject<SideEffect, Never>()
     
     private let keyValueStorage: KeyValueStorage
     private let appStateManager: AppStateManager
@@ -25,7 +27,8 @@ class AppViewModel: ObservableObject, StateObserver, SideEffectConsumer, ActionS
     }
     
     func onSideEffect(sideEffect: SideEffect) {
-        AppLogger().d(message: "\(sideEffect)")
+        AppLogger().d(message: "\(String(describing: sideEffect))")
+        sideEffectsSubject.send(sideEffect)
     }
     
     func onNewState(state newState: app.State, previousState: app.State?, transition: StateTransition?) {

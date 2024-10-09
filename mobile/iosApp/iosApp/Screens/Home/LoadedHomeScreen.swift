@@ -19,6 +19,8 @@ struct LoadedHomeScreen: View {
     }
     
     var body: some View {
-        Text("Home loaded")
+        VStack {
+            Text("Home loaded")
+        }
     }
 }
