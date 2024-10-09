@@ -19,10 +19,12 @@ struct WelcomeScreen: View {
     }
     
     var body: some View {
-        Text("Welcome slides: \(state.slides.description)")
-        Button("Skip") {
-            AppLogger().d(message: "Skip tapped")
-            actionSender.sendAction(action: HomeAction.SkipTapped())
+        VStack {
+            Text("Welcome slides: \(state.slides.description)")
+            Button("Skip") {
+                AppLogger().d(message: "Skip tapped")
+                actionSender.sendAction(action: HomeAction.SkipTapped())
+            }
         }
     }
 }
