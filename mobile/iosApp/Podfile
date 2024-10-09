@@ -2,4 +2,6 @@ target 'iosApp' do
   use_frameworks!
   platform :ios, '14.1'
   pod 'app', :path => '../app'
+  pod 'AppAuth'
+  pod 'JWTDecode', '~> 3.2'
 end

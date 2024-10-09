@@ -13,6 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "langsapp")
     }
     buildTypes {
         getByName("release") {
@@ -38,4 +39,6 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("com.auth0.android:jwtdecode:2.0.2")
+    implementation("net.openid:appauth:0.11.1")
 }
