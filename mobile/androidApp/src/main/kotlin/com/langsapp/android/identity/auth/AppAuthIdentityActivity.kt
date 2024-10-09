@@ -2,69 +2,129 @@ package com.langsapp.android.identity.auth
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.activity.result.contract.ActivityResultContracts
+import com.auth0.android.jwt.JWT
+import com.langsapp.android.logging.Log
 import com.langsapp.identity.auth.AuthConfig
-import java.text.SimpleDateFormat
-import java.util.Date
+import net.openid.appauth.AuthorizationException
+import net.openid.appauth.AuthorizationRequest
+import net.openid.appauth.AuthorizationResponse
+import net.openid.appauth.AuthorizationService
+import net.openid.appauth.AuthorizationServiceConfiguration
+import net.openid.appauth.ResponseTypeValues
 
 class AppAuthIdentityActivity : ComponentActivity() {
 
     private lateinit var authConfig: AuthConfig
+    private lateinit var authorizationService: AuthorizationService
+
+    private val browserAuthenticationLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            Log.d("Browser auth result: $it")
+            val data = it.data
+            if (data == null) {
+                Log.e("Something went wrong with browser authentication")
+                finish()
+                return@registerForActivityResult
+            }
+            val response = AuthorizationResponse.fromIntent(data)
+            val exception = AuthorizationException.fromIntent(data)
+            Log.d("Auth response: $response")
+            Log.d("Auth exception: $exception")
+            if (exception != null && exception.type == AuthorizationException.TYPE_GENERAL_ERROR) {
+                Log.e("Error when signing in. Finishing")
+                finish()
+                return@registerForActivityResult
+            }
+            if (response == null) {
+                Log.e(
+                    "Error when signing in. " +
+                        "AuthorizationResponse shouldn't be null at this moment. Finishing",
+                )
+                finish()
+                return@registerForActivityResult
+            }
+            exchangeAuthResponseForToken(response)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        authConfig = intent.parseAuthConfig()
-        setContent {
-            Column {
-                Text("Temporary Auth screen")
-                Spacer(Modifier.height(16.dp))
-
-                Button(onClick = {
-                    finish()
-                }) {
-                    Text("Finish with error")
-                }
-
-                Button(onClick = {
-                    setResult(RESULT_CANCELED)
-                    finish()
-                }) {
-                    Text("Finish with cancel")
-                }
-
-                Spacer(Modifier.height(16.dp))
-                Button(onClick = {
-                    setSuccessResult()
-                    finish()
-                }) {
-                    Text("Finish auth")
-                }
-                Spacer(Modifier.height(16.dp))
+        authConfig = runCatching { intent.parseAuthConfig() }
+            .onFailure {
+                Log.e("Failed to parse config. Reason: $it")
             }
+            .getOrElse {
+                finish()
+                return
+            }
+        authorizationService = AuthorizationService(this)
+        browserAuthenticationLauncher.launch(
+            authorizationService
+                .getAuthorizationRequestIntent(
+                    AuthorizationRequest.Builder(
+                        AuthorizationServiceConfiguration(
+                            Uri.parse(authConfig.authorizationEndpoint),
+                            Uri.parse(authConfig.tokenEndpoint),
+                            Uri.parse(authConfig.registrationEndpoint),
+                            Uri.parse(authConfig.endSessionEndpoint),
+                        ),
+                        authConfig.clientId,
+                        ResponseTypeValues.CODE,
+                        Uri.parse(authConfig.redirectUri),
+                    )
+                        .build(),
+                ),
+        )
+    }
+
+    private fun exchangeAuthResponseForToken(authorizationResponse: AuthorizationResponse) {
+        // exchange for token
+        authorizationService.performTokenRequest(authorizationResponse.createTokenExchangeRequest()) { tokenResponse, tokenRequestException ->
+            Log.d(
+                """
+                Token response:
+                    accessToken: ${tokenResponse?.accessToken},
+                    expires in: ${tokenResponse?.accessTokenExpirationTime},
+                    id token: ${tokenResponse?.idToken},
+                    refreshToken: ${tokenResponse?.refreshToken},
+                    scope: ${tokenResponse?.scope},
+                    additionalParameters: ${tokenResponse?.additionalParameters},
+                    exception: $tokenRequestException
+                """.trimIndent(),
+            )
+
+            tokenResponse?.accessToken?.let { accessToken ->
+                val userId =
+                    runCatching { JWT(accessToken).subject }
+                        .onFailure {
+                            Log.e("Failed decoding token. Reason: $it")
+                        }
+                        .getOrNull()
+                if (userId != null) {
+                    setResult(
+                        RESULT_OK,
+                        Intent().apply {
+                            putExtra(RESULT_ACCESS_TOKEN, accessToken)
+                            putExtra(RESULT_REFRESH_TOKEN, tokenResponse.refreshToken)
+                            putExtra(RESULT_USER_ID, userId)
+                            putExtra(ACCESS_TOKEN_EXPIRATION_MS, tokenResponse.accessTokenExpirationTime ?: 0)
+                        },
+                    )
+                    finish()
+                    return@performTokenRequest
+                }
+            }
+            setResult(RESULT_OK, Intent())
+            finish()
         }
     }
 
-    @Suppress("SimpleDateFormat")
-    private fun setSuccessResult() {
-        setResult(
-            RESULT_OK,
-            Intent().apply {
-                val dateTimeFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                putExtra(RESULT_ACCESS_TOKEN, "accessToken-${dateTimeFormatter.format(Date())}")
-                putExtra(RESULT_REFRESH_TOKEN, "refreshToken-${dateTimeFormatter.format(Date())}")
-                putExtra(RESULT_USER_ID, "userId1")
-                putExtra(ACCESS_TOKEN_EXPIRATION_MS, System.currentTimeMillis() + 60000)
-            },
-        )
+    override fun onDestroy() {
+        super.onDestroy()
+        authorizationService.dispose()
     }
 
     companion object {

@@ -1,8 +1,22 @@
 PODS:
   - app (0.1)
+  - AppAuth (1.7.5):
+    - AppAuth/Core (= 1.7.5)
+    - AppAuth/ExternalUserAgent (= 1.7.5)
+  - AppAuth/Core (1.7.5)
+  - AppAuth/ExternalUserAgent (1.7.5):
+    - AppAuth/Core
+  - JWTDecode (3.2.0)
 
 DEPENDENCIES:
   - app (from `../app`)
+  - AppAuth
+  - JWTDecode (~> 3.2)
+
+SPEC REPOS:
+  trunk:
+    - AppAuth
+    - JWTDecode
 
 EXTERNAL SOURCES:
   app:
@@ -10,7 +24,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   app: ccfefba71a8e842064f76eaf69152e2aa3ff197d
+  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
+  JWTDecode: 7dae24cb9bf9b608eae61e5081029ec169bb5527
 
-PODFILE CHECKSUM: 1068187fe11c3a3b1563a21eb96033ee38b1ab52
+PODFILE CHECKSUM: bd42a432c4ae948b40af616a909bcb008af3902f
 
 COCOAPODS: 1.15.2
