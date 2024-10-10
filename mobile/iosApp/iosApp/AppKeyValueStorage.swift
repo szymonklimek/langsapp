@@ -17,6 +17,10 @@ class AppKeyValueStorage: KeyValueStorage {
         return localDictionary[key]
     }
     
+    func getAll() -> [String : String] {
+        return localDictionary
+    }
+    
     func remove(key: String) {
         localDictionary.removeValue(forKey: key)
     }

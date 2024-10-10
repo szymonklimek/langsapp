@@ -21,6 +21,7 @@
 		EB1D1D232CB708B000F77D40 /* AuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D222CB708B000F77D40 /* AuthResult.swift */; };
 		EB1D1D252CB7CC7000F77D40 /* AppAuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D242CB7CC7000F77D40 /* AppAuthViewModel.swift */; };
 		EB1D1D272CB7DD7700F77D40 /* AuthResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D262CB7DD7700F77D40 /* AuthResponseHandler.swift */; };
+		EB1D1D2B2CB8873900F77D40 /* LanguageSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D2A2CB8873900F77D40 /* LanguageSettingsScreen.swift */; };
 		EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A32C635FF700B4922C /* AppLogger.swift */; };
 		EB71F7A62C637D9000B4922C /* AppKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */; };
 		EB71F7A82C63F1BA00B4922C /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */; };
@@ -49,6 +50,7 @@
 		EB1D1D222CB708B000F77D40 /* AuthResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResult.swift; sourceTree = "<group>"; };
 		EB1D1D242CB7CC7000F77D40 /* AppAuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAuthViewModel.swift; sourceTree = "<group>"; };
 		EB1D1D262CB7DD7700F77D40 /* AuthResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponseHandler.swift; sourceTree = "<group>"; };
+		EB1D1D2A2CB8873900F77D40 /* LanguageSettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsScreen.swift; sourceTree = "<group>"; };
 		EB71F7A32C635FF700B4922C /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
 		EB71F7A52C637D9000B4922C /* AppKeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppKeyValueStorage.swift; sourceTree = "<group>"; };
 		EB71F7A72C63F1BA00B4922C /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
@@ -177,9 +179,26 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
+		EB1D1D282CB8862200F77D40 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				EB1D1D292CB8863E00F77D40 /* Language */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EB1D1D292CB8863E00F77D40 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				EB1D1D2A2CB8873900F77D40 /* LanguageSettingsScreen.swift */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		EB71F7AA2C63FA5D00B4922C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EB1D1D282CB8862200F77D40 /* Settings */,
 				EB1D1D1B2CB6E55700F77D40 /* Identity */,
 				EB71F7AB2C63FA6D00B4922C /* Home */,
 			);
@@ -323,6 +342,7 @@
 				EB1D1D1F2CB6F90700F77D40 /* View_NavigationExtension.swift in Sources */,
 				EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				EB1D1D2B2CB8873900F77D40 /* LanguageSettingsScreen.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				EB1D1D252CB7CC7000F77D40 /* AppAuthViewModel.swift in Sources */,
 				EB1D1D232CB708B000F77D40 /* AuthResult.swift in Sources */,
