@@ -6,4 +6,4 @@ value class UserId(val value: String)
 @JvmInline
 value class UserName(val value: String)
 
-data class User(val userId: UserId, val userName: UserName)
+data class User(val userId: UserId, val userName: UserName?)

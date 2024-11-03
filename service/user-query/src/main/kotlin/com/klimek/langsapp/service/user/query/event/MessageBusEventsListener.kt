@@ -3,12 +3,12 @@ package com.klimek.langsapp.service.user.query.event
 import com.klimek.langsapp.events.user.UserCreatedEvent
 import com.klimek.langsapp.events.user.UserUpdatedEvent
 import com.klimek.langsapp.service.messagebus.MessageBus
-import com.klimek.langsapp.service.user.query.storage.UserQueryRepository
+import com.klimek.langsapp.service.user.query.UserQueryService
 
 class MessageBusEventsListener(
     messageBus: MessageBus,
-    repository: UserQueryRepository,
-) : EventsListener(repository) {
+    service: UserQueryService,
+) : EventsListener(service) {
     init {
         println("Registering listener $this to event bus: $messageBus")
         messageBus.register(UserCreatedEvent::class.java) {

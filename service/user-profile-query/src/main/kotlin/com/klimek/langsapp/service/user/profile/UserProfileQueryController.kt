@@ -4,7 +4,6 @@ import com.klimek.langsapp.auth.jwt.AuthenticationError
 import com.klimek.langsapp.auth.jwt.Token
 import com.klimek.langsapp.auth.jwt.TokenAuthenticator
 import com.klimek.langsapp.service.user.profile.query.generated.ProfileResponse
-import com.klimek.langsapp.service.user.profile.query.generated.User
 import com.klimek.langsapp.service.user.profile.query.generated.apis.ProfileApi
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -36,17 +35,7 @@ class UserProfileQueryController(
                         },
                         ifRight = {
                             ResponseEntity.ok(
-                                ProfileResponse(
-                                    user = it?.let {
-                                        User(
-                                            id = it.id,
-                                            name = it.name,
-                                            avatarUrl = it.avatarUrl,
-                                            followingCount = it.followingCount,
-                                            followersCount = it.followersCount,
-                                        )
-                                    },
-                                ),
+                                ProfileResponse(userProfile = it),
                             )
                         },
                     )

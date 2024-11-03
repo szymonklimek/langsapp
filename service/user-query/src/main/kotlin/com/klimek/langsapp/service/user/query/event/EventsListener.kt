@@ -2,26 +2,16 @@ package com.klimek.langsapp.service.user.query.event
 
 import com.klimek.langsapp.events.user.UserCreatedEvent
 import com.klimek.langsapp.events.user.UserUpdatedEvent
-import com.klimek.langsapp.service.user.query.UserId
-import com.klimek.langsapp.service.user.query.UserName
-import com.klimek.langsapp.service.user.query.storage.UserQueryRepository
+import com.klimek.langsapp.service.user.query.UserQueryService
 
 abstract class EventsListener(
-    private val repository: UserQueryRepository,
+    private val userQueryService: UserQueryService,
 ) {
     fun onUserCreatedEvent(event: UserCreatedEvent) {
-        repository
-            .storeUser(
-                UserId(event.userId),
-                UserName(event.userName),
-            )
+        userQueryService.handleUserCreatedEvent(event)
     }
 
     fun onUserUpdatedEvent(event: UserUpdatedEvent) {
-        repository
-            .storeUser(
-                UserId(event.userId),
-                UserName(event.userName),
-            )
+        userQueryService.handleUserUpdatedEvent(event)
     }
 }

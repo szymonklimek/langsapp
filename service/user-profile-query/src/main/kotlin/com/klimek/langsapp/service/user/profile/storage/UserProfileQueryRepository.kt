@@ -2,21 +2,25 @@ package com.klimek.langsapp.service.user.profile.storage
 
 import arrow.core.Either
 import arrow.core.right
-import com.klimek.langsapp.service.user.profile.domain.UserProfileProjection
 import org.springframework.stereotype.Repository
 
 @Repository
 class UserProfileQueryRepository {
 
-    fun getUserById(userId: String): Either<StorageError, UserProfileProjection?> =
+    fun getUserById(userId: String): Either<StorageError, UserProfileRecord?> =
         UserProfileInMemoryStorage.usersProfiles[userId].right()
 
-    fun storeUserProjection(user: UserProfileProjection): Either<StorageError, Unit> {
-        UserProfileInMemoryStorage.usersProfiles[user.id] = user
+    fun storeFreshUser(userId: String): Either<StorageError, Unit> {
+        UserProfileInMemoryStorage.usersProfiles[userId] = UserProfileRecord(id = userId)
         return Unit.right()
     }
 
-    fun storeUserProjections(users: List<UserProfileProjection>): Either<StorageError, Unit> {
+    fun storeUserProfileRecord(userProfileRecord: UserProfileRecord): Either<StorageError, Unit> {
+        UserProfileInMemoryStorage.usersProfiles[userProfileRecord.id] = userProfileRecord
+        return Unit.right()
+    }
+
+    fun storeUserProfileRecords(users: List<UserProfileRecord>): Either<StorageError, Unit> {
         users.forEach {
             UserProfileInMemoryStorage.usersProfiles[it.id] = it
         }

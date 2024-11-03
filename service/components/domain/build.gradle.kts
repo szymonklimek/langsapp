@@ -6,7 +6,6 @@ plugins {
 
 dependencies {
     api(libs.kotlin.stdlib.jdk8)
-    api(project(":components:domain"))
 }
 
 tasks.withType<KotlinCompile> {

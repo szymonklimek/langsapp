@@ -83,3 +83,37 @@ components:
       schema:
         type: string
         example: "1.1.2 (123)"
+
+  schemas:
+    LanguageSettings:
+      type: object
+      properties:
+
+        # This language is the one you will learn units in.
+        # During learning speech will be generated in this language.
+        learn_language:
+          $ref: "#/components/schemas/LanguageSetting"
+
+        # This language is the one in which all units will be translated.
+        # It is the language expected to be known by the user.
+        base_language:
+          $ref: "#/components/schemas/LanguageSetting"
+
+        # The extra language expected to be learnt by the way.
+        # When set, all units will contain additional translations.
+        support_language:
+          $ref: "#/components/schemas/LanguageSetting"
+
+      required:
+        - learn_language
+        - base_language
+
+    LanguageSetting:
+      type: object
+      properties:
+        code:
+          description: ISO-639 code of the language
+          type: string
+          example: pl
+      required:
+        - code
