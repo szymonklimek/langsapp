@@ -64,10 +64,22 @@ spotless {
         trimTrailingWhitespace()
         ktlint()
     }
+    gherkin {
+        target(
+            fileTree(".") {
+                include("**/*.feature")
+            },
+        )
+        gherkinUtils()
+    }
+}
+
+tasks.named("spotlessKotlinGradle") {
+    dependsOn("spotlessGherkin")
 }
 
 tasks.named("spotlessKotlin") {
-    dependsOn("spotlessKotlinGradle")
+    dependsOn("spotlessKotlinGradle", "spotlessGherkin")
 }
 
 // endregion

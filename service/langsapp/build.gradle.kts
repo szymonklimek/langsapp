@@ -18,6 +18,13 @@ dependencies {
     implementation(project(":user-commands"))
     implementation(project(":user-follow-commands"))
     implementation(project(":user-profile-query"))
+
+    testImplementation(libs.cucumber.java)
+    testImplementation(libs.cucumber.junit.platform.engine)
+    testImplementation(libs.cucumber.spring)
+    testImplementation(libs.junit.platform.suite)
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.testcontainers.junit.jupiter)
 }
 
 tasks.withType<KotlinCompile> {
