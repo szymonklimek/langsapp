@@ -14,7 +14,7 @@ paths:
   /profile:
     get:
       tags:
-        - user
+        - profile
       summary: Get current user profile
       operationId: getCurrentUserProfile
 
@@ -51,10 +51,10 @@ components:
         Full information about user's profile.
         If 'user' is missing then it has to be created through Langsapp User Commands API first.
       properties:
-        user:
-          $ref: '#/components/schemas/User'
+        user_profile:
+          $ref: '#/components/schemas/UserProfile'
 
-    User:
+    UserProfile:
       type: object
       properties:
         id:
@@ -65,6 +65,8 @@ components:
         avatar_url:
           description: URL of avatar image
           type: string
+        language_settings:
+          $ref: "open_api_common.yaml#/components/schemas/LanguageSettings"
         following_count:
           description: Count of followed users
           type: integer
@@ -73,6 +75,5 @@ components:
           type: integer
       required:
         - id
-        - name
         - following_count
         - followers_count

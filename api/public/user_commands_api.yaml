@@ -33,16 +33,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/CreateUserRequest'
         required: true
 
       responses:
         201:
           description: Success - user created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
+          content: { }
         400:
           description: Bad request
           content: { }
@@ -56,10 +53,10 @@ paths:
           description: Internal server error
           content: { }
 
-    put:
+    patch:
       tags:
         - user
-      summary: Updates previously created user
+      summary: Updates properties of previously created user
       operationId: updateUser
 
       parameters:
@@ -77,16 +74,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRequest'
+              $ref: '#/components/schemas/UpdateUserRequest'
         required: true
 
       responses:
         200:
           description: Success - user updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserResponse'
+          content: { }
         400:
           description: Bad request
           content: { }
@@ -105,32 +99,32 @@ paths:
 
 components:
   schemas:
+    CreateUserRequest:
+      type: object
+      properties:
+        id:
+          description: Globally unique identifier of the user
+          type: string
+      required:
+        - id
 
-    UserRequest:
+    UpdateUserRequest:
       type: object
       description: An object representing complete user
       properties:
-        name:
+        username:
           description: Chosen username
           type: string
         avatar_url:
           description: URL of previously uploaded image of avatar
           type: string
-      required:
-        - name
-
-    UserResponse:
-      type: object
-      description: An object representing complete
-      properties:
-        id:
-          type: string
-        name:
-          description: Chosen username
-          type: string
-        avatar_url:
-          description: URL of avatar image
-          type: string
-      required:
-        - id
-        - name
+        language_settings:
+          $ref: "open_api_common.yaml#/components/schemas/LanguageSettings"
+        properties_to_delete:
+          description: Array of fields to clear. Note that some of them may not be allowed to be removed
+          type: array
+          items:
+            description: The name of the property to delete
+            type: string
+            enum: [avatar_url]
+            example: avatar_url
