@@ -102,7 +102,7 @@ class UserProfileRepository(
             .onSuccess {
                 keyValueStorage.set(
                     getUserStorageKey(identityStateProvider().userId),
-                    Json.encodeToString(it as UserProfileInfo)
+                    Json.encodeToString(it as UserProfileInfo),
                 )
             }
             .map { }

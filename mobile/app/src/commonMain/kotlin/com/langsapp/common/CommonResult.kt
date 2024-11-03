@@ -10,7 +10,7 @@ sealed class CommonResult<SuccessType, FailureType> {
 
     fun fold(
         onSuccess: (SuccessType) -> (Unit),
-        onFailure: (FailureType) -> (Unit)
+        onFailure: (FailureType) -> (Unit),
     ) {
         when (this) {
             is Success -> onSuccess(value)

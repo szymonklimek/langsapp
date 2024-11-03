@@ -5,10 +5,10 @@ class OnBoardingInfo private constructor(
 ) {
     val isFinished: Boolean =
         sections.none {
-            (it.rootStep.required && !it.rootStep.done)
-                || it.childSteps.any { stepInfo ->
-                (stepInfo.required && !stepInfo.done)
-            }
+            (it.rootStep.required && !it.rootStep.done) ||
+                it.childSteps.any { stepInfo ->
+                    (stepInfo.required && !stepInfo.done)
+                }
         }
 
     enum class OnBoardingStep {
