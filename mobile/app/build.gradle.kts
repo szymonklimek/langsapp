@@ -43,7 +43,7 @@ val buildConfigGenerator by tasks.registering(Sync::class) {
                             .map { "    const val ${it.key} = \"${it.value}\"" }
                             .joinToString(separator = "\n")
                     }
-                    |} 
+                    |}
                     |
                     """.trimMargin(),
                 )

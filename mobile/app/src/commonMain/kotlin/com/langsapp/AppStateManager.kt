@@ -33,8 +33,7 @@ import com.langsapp.userprofile.upsert.UpsertProfileStateManager
 
 class AppStateManager(
     keyValueStorage: KeyValueStorage = AppConfig.keyValueStorage,
-) :
-    StateObserver<State>,
+) : StateObserver<State>,
     SideEffectConsumer<SideEffect> {
     var currentState: State
     var stateObserver: StateObserver<State>? = null

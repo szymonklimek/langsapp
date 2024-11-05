@@ -7,17 +7,17 @@ buildscript {
 
     // endregion
 
-    java.util.Properties()
+    java.util
+        .Properties()
         .apply {
             file(localPropertiesFilename).run { if (exists()) load(reader()) }
-        }
-        .forEach { project.extra.set(it.key.toString(), it.value) }
+        }.forEach { project.extra.set(it.key.toString(), it.value) }
 
     findProperty(containerRegistryPropertyKey)
         ?: println(
             """
             _____________________________________
-            IMPORTANT: Container Registry URL is missing. 
+            IMPORTANT: Container Registry URL is missing.
             Provide '$containerRegistryPropertyKey' in project properties, for example in 'local.properties' file.
             _____________________________________
             """.trimIndent(),
@@ -26,7 +26,7 @@ buildscript {
 
 plugins {
     id("org.openapi.generator") version "6.4.0" apply false
-    id("com.diffplug.spotless") version "6.25.0"
+    id("com.diffplug.spotless") version "7.0.0.BETA4"
 }
 
 // region Spotless configuration
