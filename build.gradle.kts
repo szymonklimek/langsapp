@@ -37,6 +37,7 @@ spotless {
             "**/.gradle/**",
             "**/build/generated/**",
             "**/build/open-api-generated/**",
+            "**/mobile/api-clients/**",
         )
 
     kotlin {
