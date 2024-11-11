@@ -85,6 +85,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
                 implementation(libs.kotlinx.datetime)
+                implementation(project(":api-clients:user-commands"))
+                implementation(project(":api-clients:user-profile-query"))
             }
         }
         val commonTest by getting {

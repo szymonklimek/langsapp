@@ -27,3 +27,5 @@ pluginManagement {
 rootProject.name = "langsapp"
 include(":androidApp")
 include(":app")
+include(":api-clients:user-commands")
+include(":api-clients:user-profile-query")
