@@ -40,9 +40,15 @@ class UserProfileRepository(
                     is IdentityState.SignedIn -> {
                         Log.d("User signed in (id: ${identityState.userId}). Downloading profile from server")
                         runCatching { identityState.readRemoteProfile() }
+                            .onFailure {
+                                Log.e("Failed to read remote profile. Reason: $it")
+                            }
                             .mapCatching {
                                 Log.d("Downloaded profile from server: $it")
                                 it ?: createNewUserProfile(identityState)
+                            }
+                            .onFailure {
+                                Log.e("Failed to create profile. Reason: $it")
                             }
                     }
                 }

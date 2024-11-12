@@ -17,7 +17,7 @@ import com.langsapp.content.ManageContentStateManager
 import com.langsapp.data.ContentDatabase
 import com.langsapp.data.ContentService
 import com.langsapp.data.MockContentService
-import com.langsapp.data.MockUserProfileService
+import com.langsapp.data.RemoteUserProfileService
 import com.langsapp.data.UserProfileService
 import com.langsapp.devoptions.DevOptionsRepository
 import com.langsapp.devoptions.DevOptionsStateManager
@@ -44,7 +44,12 @@ class AppStateManager(
     private val contentService: ContentService = MockContentService()
     private val contentDatabase: ContentDatabase = ContentDatabase()
     private val manageContentRepository = ManageContentRepository(contentService, contentDatabase)
-    private val userProfileService: UserProfileService = MockUserProfileService()
+    private val userProfileService: UserProfileService =
+        RemoteUserProfileService(
+            baseUrlProvider = { AppConfig.apiEnvironment.apiUrl },
+            httpClientProvider = { AppConfig.httpClient },
+            appInstallationInfo = AppConfig.appInstallationInfo,
+        )
     private val userProfileRepository = UserProfileRepository(
         identityStateProvider = { identityStateManager.currentState },
         profileService = userProfileService,
