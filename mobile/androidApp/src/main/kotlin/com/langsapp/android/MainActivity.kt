@@ -25,12 +25,14 @@ import com.langsapp.android.identity.auth.AppAuthIdentityContract
 import com.langsapp.android.identity.auth.AuthResult
 import com.langsapp.android.logging.Log
 import com.langsapp.android.ui.content.ManageContentScreen
+import com.langsapp.android.ui.devoptions.DevOptionsScreen
 import com.langsapp.android.ui.home.HomeScreen
 import com.langsapp.android.ui.settings.language.LanguageSettingsScreen
 import com.langsapp.android.ui.userprofile.upsert.UpsertProfileScreen
 import com.langsapp.architecture.CommonSideEffect
 import com.langsapp.architecture.StateTransition
 import com.langsapp.content.ManageContentState
+import com.langsapp.devoptions.DevOptionsState
 import com.langsapp.home.HomeNavigationSideEffect
 import com.langsapp.home.HomeState
 import com.langsapp.identity.IdentityAction
@@ -132,6 +134,10 @@ fun AppUi(appViewModel: AppViewModel) {
                 is ManageContentState -> ManageContentScreen(
                     actionSender = appViewModel,
                     state = it.first as ManageContentState,
+                )
+                is DevOptionsState -> DevOptionsScreen(
+                    actionSender = appViewModel,
+                    state = it.first as DevOptionsState,
                 )
             }
         }

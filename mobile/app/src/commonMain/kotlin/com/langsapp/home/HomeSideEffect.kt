@@ -19,4 +19,5 @@ sealed class HomeNavigationSideEffect(direction: Direction) : CommonSideEffect.N
     data class ManageContent(
         val languageSetting: LanguageSetting,
     ) : HomeNavigationSideEffect(Direction.FORWARD)
+    data object DevOptions : HomeNavigationSideEffect(Direction.FORWARD)
 }

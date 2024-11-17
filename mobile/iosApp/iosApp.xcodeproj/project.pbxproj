@@ -12,6 +12,7 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		99C99B8577A1205C21BA4743 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */; };
+		EB0BF71A2CEAC8D800F9F5F9 /* DevOptionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0BF7192CEAC8D800F9F5F9 /* DevOptionsScreen.swift */; };
 		EB1D1D112CB5D4DE00F77D40 /* ToastMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D102CB5D4DE00F77D40 /* ToastMessageView.swift */; };
 		EB1D1D142CB5D6BD00F77D40 /* ToastMessageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D132CB5D6BD00F77D40 /* ToastMessageModifier.swift */; };
 		EB1D1D172CB5D74900F77D40 /* ToastMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D1D162CB5D74900F77D40 /* ToastMessage.swift */; };
@@ -46,6 +47,7 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8748739CDE893B32455E8DE4 /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		87D63107D7807D5D0660C9AE /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EB0BF7192CEAC8D800F9F5F9 /* DevOptionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevOptionsScreen.swift; sourceTree = "<group>"; };
 		EB1D1D102CB5D4DE00F77D40 /* ToastMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageView.swift; sourceTree = "<group>"; };
 		EB1D1D132CB5D6BD00F77D40 /* ToastMessageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessageModifier.swift; sourceTree = "<group>"; };
 		EB1D1D162CB5D74900F77D40 /* ToastMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMessage.swift; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		EB0BF7182CEAC8BD00F9F5F9 /* Devoptions */ = {
+			isa = PBXGroup;
+			children = (
+				EB0BF7192CEAC8D800F9F5F9 /* DevOptionsScreen.swift */,
+			);
+			path = Devoptions;
+			sourceTree = "<group>";
+		};
 		EB1D1D122CB5D68300F77D40 /* CommonUi */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +245,7 @@
 		EB71F7AA2C63FA5D00B4922C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				EB0BF7182CEAC8BD00F9F5F9 /* Devoptions */,
 				EB25844D2CD1B63C0084FBE9 /* Content */,
 				EB2584472CD1B1CA0084FBE9 /* Userprofile */,
 				EB1D1D282CB8862200F77D40 /* Settings */,
@@ -385,6 +396,7 @@
 				EB2584512CD1B6D30084FBE9 /* ContentLoadFailureScreen.swift in Sources */,
 				EB71F7A42C635FF700B4922C /* AppLogger.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				EB0BF71A2CEAC8D800F9F5F9 /* DevOptionsScreen.swift in Sources */,
 				EB25844A2CD1B1F40084FBE9 /* UpsertProfileScreen.swift in Sources */,
 				EB1D1D2B2CB8873900F77D40 /* LanguageSettingsScreen.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,

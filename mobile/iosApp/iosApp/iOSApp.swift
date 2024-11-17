@@ -7,7 +7,12 @@ struct iOSApp: App {
     let keyValueStorage = AppKeyValueStorage()
     
     init() {
-        app.AppConfig.shared.doInit(log: logger, keyValueStorage: keyValueStorage)
+        app.AppConfig.shared.doInit(
+            log: logger,
+            keyValueStorage: keyValueStorage,
+            // TODO Implement condition "if release build" here instead hardcoding to true
+            devOptionsEnabled: true
+        )
         let buildConfig = BuildConfig()
         AppLogger().d(message: "Starting application. Version: \(buildConfig.APP_VERSION), commit: \(buildConfig.BUILD_COMMIT_HASH), built at: \(buildConfig.BUILD_TIME)")
     }

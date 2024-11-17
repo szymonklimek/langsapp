@@ -20,6 +20,8 @@ struct ContentView: View {
                 UpsertProfileScreen(state: viewModel.state as! UpsertProfileState, actionSender: viewModel)
             case is ManageContentState:
                 ManageContentScreen(state: viewModel.state as! ManageContentState, actionSender: viewModel)
+            case is DevOptionsState:
+                DevOptionsScreen(state: viewModel.state as! DevOptionsState, actionSender: viewModel)
             default:
                 fatalError("Unknown state: \(viewModel.state)")
             }

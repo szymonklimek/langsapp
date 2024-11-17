@@ -25,6 +25,12 @@ struct WelcomeScreen: View {
                 AppLogger().d(message: "Skip tapped")
                 actionSender.sendAction(action: HomeAction.SkipTapped())
             }
+            if (state.devOptionsEnabled) {
+                Button("Dev options") {
+                    AppLogger().d(message: "Dev options tapped")
+                    actionSender.sendAction(action: HomeAction.DevOptionsTapped())
+                }
+            }
         }
     }
 }
