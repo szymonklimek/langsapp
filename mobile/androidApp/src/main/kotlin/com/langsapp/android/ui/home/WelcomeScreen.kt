@@ -23,5 +23,14 @@ fun WelcomeScreen(
         ) {
             Text("Skip")
         }
+        if (welcomeState.devOptionsEnabled) {
+            Button(
+                onClick = {
+                    actionSender.sendAction(HomeAction.DevOptionsTapped)
+                },
+            ) {
+                Text("Dev options")
+            }
+        }
     }
 }

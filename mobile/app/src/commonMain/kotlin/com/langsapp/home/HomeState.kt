@@ -7,10 +7,14 @@ import com.langsapp.home.onboarding.UserProfileInfo
 import com.langsapp.home.welcome.WelcomeSlide
 
 sealed class HomeState : State {
-    data class Welcome(val slides: List<WelcomeSlide>) : HomeState()
+    data class Welcome(
+        val slides: List<WelcomeSlide>,
+        val devOptionsEnabled: Boolean,
+    ) : HomeState()
     data object Loading : HomeState()
     data class Loaded(
         val userProfileInfo: CommonResult<UserProfileInfo, Unit>,
         val onBoardingInfo: CommonResult<OnBoardingInfo, Unit>,
+        val devOptionsEnabled: Boolean,
     ) : HomeState()
 }

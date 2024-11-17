@@ -27,6 +27,7 @@ class LangsappApplication : Application() {
                     map.remove(key)
                 }
             },
+            devOptionsEnabled = com.langsapp.android.app.BuildConfig.DEBUG,
         )
     }
 }

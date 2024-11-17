@@ -14,9 +14,14 @@ import com.langsapp.userprofile.upsert.UpsertProfileState
 class HomeStateManager(
     welcomeSlides: List<WelcomeSlide>,
     authConfigProvider: () -> AuthConfig,
+    devOptionsEnabled: Boolean,
     homeRepository: HomeRepository,
 ) : StateManager<HomeState, HomeAction>(
-    initialState = if (!homeRepository.hasShownWelcome()) HomeState.Welcome(welcomeSlides) else HomeState.Loading,
+    initialState = if (!homeRepository.hasShownWelcome()) {
+        HomeState.Welcome(welcomeSlides, devOptionsEnabled)
+    } else {
+        HomeState.Loading
+    },
     initialSideEffects = if (!homeRepository.hasShownWelcome()) null else ArrayDeque(listOf(HomeSideEffect.LoadHomeDataSideEffect)),
     handleAction = { currentState, action ->
         when (action) {
@@ -58,7 +63,7 @@ class HomeStateManager(
             )
 
             is HomeAction.HomeDataLoaded -> ActionResult(
-                newState = HomeState.Loaded(action.userProfileInfo, action.onBoardingInfo),
+                newState = HomeState.Loaded(action.userProfileInfo, action.onBoardingInfo, devOptionsEnabled),
             )
 
             HomeAction.SignUpTapped -> ActionResult(
@@ -115,6 +120,10 @@ class HomeStateManager(
                         ActionResult()
                     }
                 }
+
+            HomeAction.DevOptionsTapped -> ActionResult(
+                sideEffects = ArrayDeque(listOf(HomeNavigationSideEffect.DevOptions)),
+            )
         }
     },
     handleSideEffect = { sideEffect ->

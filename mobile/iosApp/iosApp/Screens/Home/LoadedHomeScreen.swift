@@ -24,6 +24,13 @@ struct LoadedHomeScreen: View {
             let onBoardingInfoResult = state.onBoardingInfo
             
             Text("Home loaded")
+            if (state.devOptionsEnabled) {
+                Button("Dev options") {
+                    AppLogger().d(message: "Dev options tapped")
+                    actionSender.sendAction(action: HomeAction.DevOptionsTapped())
+                }
+            }
+            
             Text("User profile info: \(String(describing: state.userProfileInfo))")
             
             if userProfileInfoResult is CommonResultSuccess {

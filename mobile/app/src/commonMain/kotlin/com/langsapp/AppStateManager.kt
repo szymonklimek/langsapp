@@ -19,6 +19,8 @@ import com.langsapp.data.ContentService
 import com.langsapp.data.MockContentService
 import com.langsapp.data.MockUserProfileService
 import com.langsapp.data.UserProfileService
+import com.langsapp.devoptions.DevOptionsRepository
+import com.langsapp.devoptions.DevOptionsStateManager
 import com.langsapp.home.HomeNavigationSideEffect
 import com.langsapp.home.HomeRepository
 import com.langsapp.home.HomeStateManager
@@ -63,6 +65,7 @@ class AppStateManager(
     private val homeStateManager = HomeStateManager(
         welcomeSlides = listOf(),
         authConfigProvider = { AppConfig.authConfig },
+        devOptionsEnabled = AppConfig.devOptionsEnabled,
         homeRepository = HomeRepository(
             keyValueStorage = keyValueStorage,
             userProfileRepository = userProfileRepository,
@@ -130,6 +133,18 @@ class AppStateManager(
                 ManageContentStateManager(
                     languageSetting = languageSetting,
                     manageContentRepository = manageContentRepository,
+                ).apply {
+                    this.stateObserver = this@AppStateManager
+                    this.sideEffectConsumer = this@AppStateManager
+                },
+            )
+
+            is HomeNavigationSideEffect.DevOptions -> stateManagersStack.addLast(
+                DevOptionsStateManager(
+                    repository = DevOptionsRepository(
+                        appConfig = AppConfig,
+                        keyValueStorage = AppConfig.keyValueStorage,
+                    ),
                 ).apply {
                     this.stateObserver = this@AppStateManager
                     this.sideEffectConsumer = this@AppStateManager

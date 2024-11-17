@@ -27,6 +27,15 @@ internal fun LoadedHomeView(
 
         Text("Home loaded")
         Spacer(Modifier.height(32.dp))
+        if (state.devOptionsEnabled) {
+            Button(
+                onClick = {
+                    actionSender.sendAction(HomeAction.DevOptionsTapped)
+                },
+            ) {
+                Text("Dev options")
+            }
+        }
 
         Text("User profile info: $userProfileInfo")
         if (userProfileInfo is CommonResult.Success) {
