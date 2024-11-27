@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <dimen name="margin_1x">4dp</dimen>
+    <dimen name="margin_2x">8dp</dimen>
+    <dimen name="margin_3x">12dp</dimen>
+    <dimen name="margin_4x">16dp</dimen>
+    <dimen name="margin_5x">20dp</dimen>
+    <dimen name="margin_6x">24dp</dimen>
+    <dimen name="margin_7x">28dp</dimen>
+    <dimen name="margin_8x">32dp</dimen>
+    <dimen name="margin_10x">40dp</dimen>
+    <dimen name="margin_11x">44dp</dimen>
+    <dimen name="margin_12x">48dp</dimen>
+    <dimen name="margin_14x">56dp</dimen>
+
+    <dimen name="text_micro">10sp</dimen>
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_large">16sp</dimen>
+    <dimen name="text_x_large">18sp</dimen>
+    <dimen name="text_xx_large">22sp</dimen>
+    <dimen name="text_xxx_large">52sp</dimen>
+
+    <dimen name="icon_micro">16dp</dimen>
+    <dimen name="icon_x_small">18dp</dimen>
+    <dimen name="icon_small">24dp</dimen>
+    <dimen name="icon_medium">36dp</dimen>
+    <dimen name="icon_large">48dp</dimen>
+    <dimen name="icon_x_large">64dp</dimen>
+
+    <dimen name="image_x_small">80dp</dimen>
+    <dimen name="image_small">100dp</dimen>
+    <dimen name="image_medium">150dp</dimen>
+    <dimen name="image_large">200dp</dimen>
+    <dimen name="image_x_large">250dp</dimen>
+
+    <dimen name="vector_default">100dp</dimen>
+
+    <dimen name="circle_indicator_size">12dp</dimen>
+</resources>
