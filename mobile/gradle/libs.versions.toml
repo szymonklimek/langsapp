@@ -9,7 +9,8 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.0" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.6.2" }
 
-open-telemetry-api = { module = "" }
+open-telemetry-api = { module = "io.opentelemetry:opentelemetry-api", version = "1.44.1" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version = "2.3.6" }
 
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version = "5.10.3" }
 junit-platform-suite = { module = "org.junit.platform:junit-platform-suite", version = "1.10.3" }

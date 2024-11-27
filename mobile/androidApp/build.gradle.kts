@@ -42,4 +42,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("com.auth0.android:jwtdecode:2.0.2")
     implementation("net.openid:appauth:0.11.1")
+    implementation(libs.open.telemetry.api)
 }
