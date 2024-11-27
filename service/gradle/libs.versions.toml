@@ -1,5 +1,5 @@
 [versions]
-jvm-target = "17"
+jvm-target = "21"
 kotlin-coroutines = "1.6.1"
 ecwid-consul-api = "1.4.5"
 arrow = "1.2.0-RC"
