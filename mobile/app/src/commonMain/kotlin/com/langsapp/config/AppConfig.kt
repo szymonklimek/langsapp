@@ -7,10 +7,15 @@ import com.langsapp.observability.Observability
 import com.langsapp.platform.AppInstallationInfo
 import com.langsapp.platform.randomUUID
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.HttpSend
+import io.ktor.client.plugins.api.SendingRequest
+import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.util.AttributeKey
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 
 object AppConfig {
@@ -46,7 +51,7 @@ object AppConfig {
         this.uniqueInstallationId = "installation_id"
             .let { keyValueStorage.get(it) ?: randomUUID().apply { keyValueStorage.set(it, this) } }
         this.devOptionsEnabled = devOptionsEnabled
-        this.apiEnvironment = ApiEnvironment(name = "prod", apiUrl = "https://api.langs.app")
+        this.apiEnvironment = ApiEnvironment(name = "prod", apiUrl = "http://10.0.2.2:8080")
         this.observability = observability
         this.appInstallationInfo = AppInstallationInfo(
             installationId = uniqueInstallationId,
@@ -58,6 +63,24 @@ object AppConfig {
             deviceSystemVersion = "",
         )
         this.httpClient = HttpClient {
+            val responseTimePlugin = createClientPlugin("ResponseTimePlugin") {
+                val onCallTimeKey = AttributeKey<Long>("onCallTimeKey")
+                val traceId = AttributeKey<String>("traceId")
+                val spanId = AttributeKey<String>("spanId")
+                observability.startTrace("traceId", "spanName", mapOf())
+                on(SendingRequest) { request, _ ->
+                    val onCallTime = Clock.System.now().toEpochMilliseconds()
+                    request.attributes.put(onCallTimeKey, onCallTime)
+                    request.attributes.put(traceId, onCallTime)
+                }
+
+                onResponse { response ->
+                    val onCallTime = response.call.attributes[onCallTimeKey]
+                    val onCallReceiveTime = Clock.System.now().toEpochMilliseconds()
+                    println("Read response delay (ms): ${onCallReceiveTime - onCallTime}")
+                }
+            }
+            install(responseTimePlugin)
             install(ContentNegotiation) {
                 json(
                     Json {
