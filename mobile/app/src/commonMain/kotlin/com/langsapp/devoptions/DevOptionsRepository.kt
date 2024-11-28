@@ -10,8 +10,8 @@ class DevOptionsRepository(
 ) {
     fun getPossibleEnvironments(): List<ApiEnvironment> = listOf(
         ApiEnvironment("prod", "https://api.langs.app"),
-        ApiEnvironment("local_android", "http://10.0.2.2:8080"),
-        ApiEnvironment("local_iOS", "http://localhost:8080"),
+        ApiEnvironment("local_android", "http://10.0.2.2:8383"),
+        ApiEnvironment("local_iOS", "http://localhost:8383"),
     )
 
     fun getSelectedEnvironment(): ApiEnvironment =

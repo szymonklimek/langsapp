@@ -9,7 +9,7 @@ services:
       - AUTH_KEYCLOAK_BASE_URL=${AUTH_KEYCLOAK_BASE_URL}
       - AUTH_KEYCLOAK_REALM=${AUTH_KEYCLOAK_REALM}
     ports:
-      - "8282:8080"
+      - "8383:8383"
     deploy:
       restart_policy:
         condition: on-failure
