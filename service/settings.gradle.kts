@@ -1,3 +1,13 @@
+pluginManagement {
+    java.util
+        .Properties()
+        .apply {
+            rootDir
+                .listFiles { file -> file.extension == "properties" }
+                ?.map { if (it.exists()) load(it.inputStream()) }
+        }.forEach { key, value -> gradle.extra.set(key.toString(), value) }
+}
+
 rootProject.name = "service"
 
 include(":components:auth")

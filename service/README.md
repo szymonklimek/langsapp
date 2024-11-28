@@ -31,5 +31,11 @@ To build the image simply run:
 
 Once the image is built, it can be uploaded to container registry.
 
+This can be done by running dedicated gradle task:
+
+```shell
+./gradlew langsapp:pushImageToRegistry
+```
+
 In order to deploy the service, it is possible to use docker compose template located in 
 [deployment directory](langsapp/deployment) of `langsapp` application module.
