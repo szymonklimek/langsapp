@@ -1,4 +1,4 @@
-rootProject.name = "langsapp"
+rootProject.name = "service"
 
 include(":components:auth")
 include(":components:auth-jwt")

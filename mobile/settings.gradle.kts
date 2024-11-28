@@ -24,7 +24,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = "langsapp"
+rootProject.name = "mobile"
 include(":androidApp")
 include(":app")
 include(":api-clients:user-commands")
