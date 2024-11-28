@@ -43,4 +43,10 @@ dependencies {
     implementation("com.auth0.android:jwtdecode:2.0.2")
     implementation("net.openid:appauth:0.11.1")
     implementation(libs.open.telemetry.api)
+
+    // OpenTelemetry
+    implementation(platform("io.opentelemetry:opentelemetry-bom:1.17.0"))
+    implementation("io.opentelemetry:opentelemetry-sdk")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp")
+    implementation("io.opentelemetry:opentelemetry-extension-kotlin")
 }
