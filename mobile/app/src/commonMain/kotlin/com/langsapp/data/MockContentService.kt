@@ -9,10 +9,13 @@ class MockContentService : ContentService {
 
     override suspend fun fetchAvailableLanguages(): List<Language> =
         listOf(
-            Language("en"),
-            Language("de"),
-            Language("pl"),
-            Language("ru"),
+            Language("en", "English"),
+            Language("de", "German"),
+            Language("pl", "Polish"),
+            Language("ru", "Russian"),
+            Language("es", "Spanish"),
+            Language("fr", "French"),
+            Language("uk", "Ukrainian")
         )
 
     override suspend fun getContentUnits(languageSetting: LanguageSetting): List<ContentUnit> =
