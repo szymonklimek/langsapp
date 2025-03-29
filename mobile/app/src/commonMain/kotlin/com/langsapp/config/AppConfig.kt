@@ -3,7 +3,12 @@ package com.langsapp.config
 import com.langsapp.BuildConfig
 import com.langsapp.devoptions.model.ApiEnvironment
 import com.langsapp.identity.auth.AuthConfig
+import com.langsapp.platform.AppInstallationInfo
 import com.langsapp.platform.randomUUID
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 
 object AppConfig {
     lateinit var log: Log
@@ -11,6 +16,10 @@ object AppConfig {
     lateinit var uniqueInstallationId: String
     lateinit var apiEnvironment: ApiEnvironment
     var devOptionsEnabled: Boolean = false
+    lateinit var httpClient: HttpClient
+        private set
+    lateinit var appInstallationInfo: AppInstallationInfo
+        private set
 
     var authConfig: AuthConfig = AuthConfig(
         authorizationEndpoint = BuildConfig.APPAUTH_AUTHORIZATION_ENDPOINT,
@@ -32,6 +41,26 @@ object AppConfig {
             .let { keyValueStorage.get(it) ?: randomUUID().apply { keyValueStorage.set(it, this) } }
         this.devOptionsEnabled = devOptionsEnabled
         this.apiEnvironment = ApiEnvironment(name = "prod", apiUrl = "https://api.langs.app")
+        this.appInstallationInfo = AppInstallationInfo(
+            installationId = uniqueInstallationId,
+            appId = "",
+            appVersion = "",
+            deviceModel = "",
+            deviceManufacturer = "",
+            deviceSystemName = "",
+            deviceSystemVersion = "",
+        )
+        this.httpClient = HttpClient {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        prettyPrint = true
+                        isLenient = true
+                    },
+                )
+            }
+        }
     }
 
     interface Log {
